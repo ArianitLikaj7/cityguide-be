@@ -1,4 +1,4 @@
-package com.arianit.cityguidebe.dto;
+package com.arianit.cityguidebe.dto.request;
 
 import com.arianit.cityguidebe.util.PageableUtil;
 import jakarta.validation.constraints.Max;

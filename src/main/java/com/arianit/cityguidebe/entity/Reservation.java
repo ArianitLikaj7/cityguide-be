@@ -4,16 +4,16 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
+@Entity
+@Table(name = "reservations")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name = "reservations")
-public class Reservation extends BaseEntity {
+@Getter
+@Setter
+public class Reservation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long reservationId;
 
     @ManyToOne

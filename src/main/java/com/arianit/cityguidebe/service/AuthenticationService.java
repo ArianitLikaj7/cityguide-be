@@ -1,10 +1,10 @@
 package com.arianit.cityguidebe.service;
 
 import com.arianit.cityguidebe.config.JwtService;
-import com.arianit.cityguidebe.dto.AuthenticationRequest;
+import com.arianit.cityguidebe.dto.request.AuthenticationRequest;
 import com.arianit.cityguidebe.dto.AuthenticationResponse;
 import com.arianit.cityguidebe.dto.CurrentLoggedInUserDto;
-import com.arianit.cityguidebe.dto.RefreshTokenRequest;
+import com.arianit.cityguidebe.dto.request.RefreshTokenRequest;
 import com.arianit.cityguidebe.entity.User;
 import com.arianit.cityguidebe.exception.TokenRefreshException;
 import lombok.RequiredArgsConstructor;

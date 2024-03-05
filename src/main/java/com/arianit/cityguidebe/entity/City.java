@@ -7,15 +7,15 @@ import java.util.List;
 
 @Entity
 @Table(name = "cities")
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class City extends BaseEntity{
+@Getter
+@Setter
+public class City extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(nullable = false)

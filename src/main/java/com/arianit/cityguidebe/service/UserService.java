@@ -2,7 +2,7 @@ package com.arianit.cityguidebe.service;
 
 import com.arianit.cityguidebe.dao.UserRepository;
 import com.arianit.cityguidebe.dto.UserDto;
-import com.arianit.cityguidebe.dto.UserRequest;
+import com.arianit.cityguidebe.dto.request.UserRequest;
 import com.arianit.cityguidebe.entity.User;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.UserMapper;

@@ -1,6 +1,6 @@
 package com.arianit.cityguidebe.util;
 
-import com.arianit.cityguidebe.dto.PageRequest;
+import com.arianit.cityguidebe.dto.request.PageRequest;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

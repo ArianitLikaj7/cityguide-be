@@ -1,4 +1,4 @@
-package com.arianit.cityguidebe.dto;
+package com.arianit.cityguidebe.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 

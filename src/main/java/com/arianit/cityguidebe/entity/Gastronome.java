@@ -7,18 +7,17 @@ import lombok.*;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Entity
+@Table(name = "gastronomies")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-@Table(name = "gastronomies")
-public class Gastronome extends BaseEntity {
+@Getter
+@Setter
+public class Gastronome {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "gastronome_id")
+    @GeneratedValue
     private Long id;
 
     @Column(nullable = false)
@@ -32,6 +31,9 @@ public class Gastronome extends BaseEntity {
 
     @Column(nullable = false)
     private Double latitude;
+
+    @Column()
+    private boolean sponsored;
 
     @Enumerated(EnumType.STRING)
     private TypeOfGastronome typeOfGastronome;

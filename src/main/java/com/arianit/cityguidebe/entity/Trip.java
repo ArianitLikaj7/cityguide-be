@@ -1,5 +1,4 @@
 package com.arianit.cityguidebe.entity;
-
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "trips")
-public class Trip extends BaseEntity {
+public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

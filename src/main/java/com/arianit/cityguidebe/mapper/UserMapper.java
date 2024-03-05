@@ -1,7 +1,7 @@
 package com.arianit.cityguidebe.mapper;
 
 import com.arianit.cityguidebe.dto.UserDto;
-import com.arianit.cityguidebe.dto.UserRequest;
+import com.arianit.cityguidebe.dto.request.UserRequest;
 import com.arianit.cityguidebe.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

@@ -1,0 +1,12 @@
+
+ALTER TABLE cities
+    ADD COLUMN created_at TIMESTAMP,
+ADD COLUMN updated_at TIMESTAMP;
+
+ALTER TABLE gastronomies
+    ADD COLUMN created_at TIMESTAMP,
+ADD COLUMN updated_at TIMESTAMP;
+
+ALTER TABLE trips
+    ADD COLUMN created_at TIMESTAMP,
+ADD COLUMN updated_at TIMESTAMP;
