@@ -10,7 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CityDto extends BaseDto {
-    private Long cityId;
     private String nameOfCity;
     private String culturalHeritage;
     private String cityPrefix;
