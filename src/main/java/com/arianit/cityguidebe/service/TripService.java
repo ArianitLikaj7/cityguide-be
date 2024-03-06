@@ -6,6 +6,7 @@ import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.TripDto;
 import com.arianit.cityguidebe.entity.City;
+import com.arianit.cityguidebe.entity.Gastronome;
 import com.arianit.cityguidebe.entity.Trip;
 import com.arianit.cityguidebe.entity.TypeOfGastronome;
 import com.arianit.cityguidebe.mapper.CityMapper;
@@ -34,17 +35,14 @@ public class TripService {
 
         List<CityDto> cityDtos = cities.stream()
                 .map(city -> {
-                    CityDto cityDto = cityMapper.toDto(city);
-                    List<GastronomeDto> gastronomeDtos = city.getGastronomes().stream()
+                    List<Gastronome> filteredGastronomies = city.getGastronomes().stream()
                             .filter(g -> gastronomyTypes.contains(g.getTypeOfGastronome()) && g.isSponsored())
-                            .map(g -> GastronomeDto.builder()
-                                    .cityId(city.getId())
-                                    .nameOfGastronome(g.getNameOfGastronome())
-                                    .typeOfGastronome(String.valueOf(g.getTypeOfGastronome()))
-                                    .build())
                             .collect(Collectors.toList());
-                    cityDto.setGastronomeDtos(gastronomeDtos);
-                    return cityDto;
+                    filteredGastronomies.addAll(city.getGastronomes().stream()
+                            .filter(g -> gastronomyTypes.contains(g.getTypeOfGastronome()) && !g.isSponsored())
+                            .collect(Collectors.toList()));
+                    city.setGastronomes(filteredGastronomies);
+                    return cityMapper.toDto(city);
                 })
                 .collect(Collectors.toList());
 
