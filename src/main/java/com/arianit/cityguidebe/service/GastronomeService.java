@@ -27,6 +27,7 @@ public class GastronomeService {
                         String.format("City with %s id not found",gastronomeRequest.cityId())
                 ));
         Gastronome gastronome = gastronomeMapper.toEntity(gastronomeRequest);
+        gastronome.setCityId(gastronomeRequest.cityId());
         Gastronome gastronomeInDb = gastronomeRepository.save(gastronome);
         return gastronomeMapper.toDto(gastronomeInDb);
     }

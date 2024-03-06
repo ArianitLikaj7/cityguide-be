@@ -14,10 +14,6 @@ import java.util.List;
 @Setter
 public class City extends BaseEntity {
 
-    @Id
-    @GeneratedValue
-    private Long id;
-
     @Column(nullable = false)
     private String nameOfCity;
 

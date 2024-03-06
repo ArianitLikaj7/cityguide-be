@@ -14,11 +14,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class Gastronome {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Gastronome extends BaseEntity{
 
     @Column(nullable = false)
     private String nameOfGastronome;
@@ -39,9 +35,12 @@ public class Gastronome {
     private TypeOfGastronome typeOfGastronome;
 
     @ManyToOne
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "city_id", insertable = false, updatable = false)
     @JsonBackReference
     private City city;
+
+    @Column(name = "city_id")
+    private Long cityId;
 
     @OneToMany(mappedBy = "gastronome", cascade = CascadeType.ALL)
     @JsonManagedReference

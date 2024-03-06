@@ -9,7 +9,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GastronomeDto extends BaseDto {
-    private Long gastronomeId;
     private Long cityId;
     private String nameOfGastronome;
     private String schedule;

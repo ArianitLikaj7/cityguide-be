@@ -41,7 +41,7 @@ public class AuthenticationService {
                 loadUserByUsername(jwtService.extractUsername(requestRefreshToken));
 
         if (!jwtService.isTokenValid(requestRefreshToken, user)){
-            throw new TokenRefreshException("Refresh token was expired. Please make a new sign-in request");
+            throw new TokenRefreshException("Refresh token was expired. Please sign-in again");
         }
 
         String token = jwtService.generateToken(user);

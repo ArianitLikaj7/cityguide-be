@@ -21,6 +21,9 @@ public class Reservation {
     @JsonBackReference
     private Gastronome gastronome;
 
+    @Column(name = "gastronome_id", insertable = false, updatable = false)
+    private Long gastronomeId;
+
     private String reservationDate;
 
     private Integer numberOfPeople;
