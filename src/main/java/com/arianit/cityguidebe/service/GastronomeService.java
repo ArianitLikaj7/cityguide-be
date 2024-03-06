@@ -2,6 +2,7 @@ package com.arianit.cityguidebe.service;
 
 import com.arianit.cityguidebe.dao.CityRepository;
 import com.arianit.cityguidebe.dao.GastronomeRepository;
+import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.request.GastronomeRequest;
 import com.arianit.cityguidebe.entity.City;
@@ -20,6 +21,7 @@ public class GastronomeService {
     private final CityRepository cityRepository;
     private final GastronomeRepository gastronomeRepository;
     private final GastronomeMapper gastronomeMapper;
+    private final CityService cityService;
 
     public GastronomeDto create (GastronomeRequest gastronomeRequest){
         City cityInDb = cityRepository.findById(gastronomeRequest.cityId())
@@ -27,6 +29,7 @@ public class GastronomeService {
                         String.format("City with %s id not found",gastronomeRequest.cityId())
                 ));
         Gastronome gastronome = gastronomeMapper.toEntity(gastronomeRequest);
+        mapCityToGastronome(gastronomeRequest,gastronome);
         Gastronome gastronomeInDb = gastronomeRepository.save(gastronome);
         return gastronomeMapper.toDto(gastronomeInDb);
     }
@@ -53,4 +56,9 @@ public class GastronomeService {
                 ));
         gastronomeRepository.deleteById(id);
     }
+    private void mapCityToGastronome(GastronomeRequest gastronomeRequest, Gastronome gastronome) {
+        CityDto city = cityService.getById(gastronomeRequest.cityId());
+        gastronome.setCityId(city.getId());
+    }
+
 }

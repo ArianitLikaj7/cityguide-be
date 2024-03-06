@@ -37,7 +37,11 @@ public class TripService {
                     CityDto cityDto = cityMapper.toDto(city);
                     List<GastronomeDto> gastronomeDtos = city.getGastronomes().stream()
                             .filter(g -> gastronomyTypes.contains(g.getTypeOfGastronome()) && g.isSponsored())
-                            .map(g -> GastronomeDto.builder().cityId(g.getId()).nameOfGastronome(g.getNameOfGastronome()).typeOfGastronome(String.valueOf(g.getTypeOfGastronome())).build())
+                            .map(g -> GastronomeDto.builder()
+                                    .cityId(city.getId())
+                                    .nameOfGastronome(g.getNameOfGastronome())
+                                    .typeOfGastronome(String.valueOf(g.getTypeOfGastronome()))
+                                    .build())
                             .collect(Collectors.toList());
                     cityDto.setGastronomeDtos(gastronomeDtos);
                     return cityDto;

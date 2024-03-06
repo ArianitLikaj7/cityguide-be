@@ -10,10 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "trips")
-public class Trip {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Trip extends BaseEntity {
 
     @Column(name = "num_of_days")
     private int numOfDays;

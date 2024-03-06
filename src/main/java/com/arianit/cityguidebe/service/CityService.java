@@ -36,7 +36,7 @@ public class CityService {
 
     // pagable
     public List<CityDto> getAll() {
-        List<City> cities = cityRepository.findAll(); // Assuming you have a custom query to fetch cities with associated gastronomes
+        List<City> cities = cityRepository.findAll();
         return cities.stream()
                 .map(cityMapper::toDto)
                 .collect(Collectors.toList());

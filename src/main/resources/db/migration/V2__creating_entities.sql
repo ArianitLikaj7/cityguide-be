@@ -1,4 +1,5 @@
 
+
 CREATE TABLE cities (
                         id SERIAL PRIMARY KEY,
                         name_of_city VARCHAR(255) NOT NULL,
@@ -33,7 +34,7 @@ CREATE TABLE gastronome_attachments (
 CREATE TABLE reservations (
                               id SERIAL PRIMARY KEY,
                               gastronome_id INTEGER,
-                              reservationDate VARCHAR(255),
+                              reservation_date VARCHAR(255),
                               number_of_people INTEGER,
                               special_requests VARCHAR(255),
                               phone_number VARCHAR(255) NOT NULL,

@@ -36,9 +36,13 @@ public class Gastronome extends BaseEntity{
     private TypeOfGastronome typeOfGastronome;
 
     @ManyToOne
-    @JoinColumn(name = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "city_id" , insertable = false, updatable = false)
     @JsonBackReference
     private City city;
+
+    @Column(name = "city_id")
+    private Long cityId;
+
 
     @OneToMany(mappedBy = "gastronome", cascade = CascadeType.ALL)
     @JsonManagedReference

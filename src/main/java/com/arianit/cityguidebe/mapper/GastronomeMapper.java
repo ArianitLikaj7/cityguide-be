@@ -5,6 +5,7 @@ import com.arianit.cityguidebe.dto.request.GastronomeRequest;
 import com.arianit.cityguidebe.entity.Gastronome;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,6 +14,7 @@ public class GastronomeMapper implements GenericMapper<Gastronome, GastronomeDto
 
     private final ModelMapper modelMapper;
     @Override
+
     public GastronomeDto toDto(Gastronome entity) {
         return modelMapper.map(entity, GastronomeDto.class);
     }
