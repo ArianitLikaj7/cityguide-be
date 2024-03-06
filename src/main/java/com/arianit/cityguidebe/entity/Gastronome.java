@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.util.List;
 
+
 @Entity
 @Table(name = "gastronomies")
 @AllArgsConstructor
@@ -35,12 +36,9 @@ public class Gastronome extends BaseEntity{
     private TypeOfGastronome typeOfGastronome;
 
     @ManyToOne
-    @JoinColumn(name = "city_id", insertable = false, updatable = false)
+    @JoinColumn(name = "id", insertable = false, updatable = false)
     @JsonBackReference
     private City city;
-
-    @Column(name = "city_id")
-    private Long cityId;
 
     @OneToMany(mappedBy = "gastronome", cascade = CascadeType.ALL)
     @JsonManagedReference
@@ -50,4 +48,6 @@ public class Gastronome extends BaseEntity{
     @CollectionTable(name = "gastronome_attachments", joinColumns = @JoinColumn(name = "gastronome_id"))
     @Column(name = "attachment")
     private List<String> attachments;
+
+
 }

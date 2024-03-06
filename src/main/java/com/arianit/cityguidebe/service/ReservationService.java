@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final ReservationMapper reservationMapper;
-    private GastronomeRepository gastronomeRepository;
+    private final GastronomeRepository gastronomeRepository;
 
     public ReservationDto create(ReservationRequest reservationRequest){
         Gastronome gastronomeInDb = gastronomeRepository.findById(reservationRequest.gastronomeId())

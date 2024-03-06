@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "cities")
@@ -29,5 +30,6 @@ public class City extends BaseEntity {
     @OneToMany(mappedBy = "city")
     @JsonManagedReference
     private List<Gastronome> gastronomes;
+
 
 }

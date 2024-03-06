@@ -51,7 +51,7 @@ public class SecurityConfig {
     private String[] getNoAuthEndpoints(){
         return new String[] {
                 "api/v1/auth/login",
-                "api/v1/auth/refresh",
+                "/trips",
                 "api/v1/auth/refresh",
                 "/v3/api-docs/**",
                 "/v3/api-docs.yaml",

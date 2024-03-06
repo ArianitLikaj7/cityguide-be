@@ -11,17 +11,14 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class Reservation {
-    @Id
-    @GeneratedValue
-    private Long reservationId;
+public class Reservation extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "gastronome_id")
+    @JoinColumn(name = "gastronome_id", insertable = false, updatable = false)
     @JsonBackReference
     private Gastronome gastronome;
 
-    @Column(name = "gastronome_id", insertable = false, updatable = false)
+    @Column(name = "gastronome_id")
     private Long gastronomeId;
 
     private String reservationDate;

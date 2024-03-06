@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReservationDto extends BaseDto{
-    private Long reservationId;
     private Long gastronomeId;
     private String reservationDate;
     private Integer numberOfPeople;
