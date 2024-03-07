@@ -2,7 +2,9 @@ package com.arianit.cityguidebe.service;
 
 import com.arianit.cityguidebe.dao.GastronomeRepository;
 import com.arianit.cityguidebe.dao.ReservationRepository;
+import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.ReservationDto;
+import com.arianit.cityguidebe.dto.request.GastronomeRequest;
 import com.arianit.cityguidebe.dto.request.ReservationRequest;
 import com.arianit.cityguidebe.entity.Gastronome;
 import com.arianit.cityguidebe.entity.Reservation;
@@ -20,6 +22,7 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final ReservationMapper reservationMapper;
     private final GastronomeRepository gastronomeRepository;
+    private final GastronomeService gastronomeService;
 
     public ReservationDto create(ReservationRequest reservationRequest){
         Gastronome gastronomeInDb = gastronomeRepository.findById(reservationRequest.gastronomeId())
@@ -27,7 +30,7 @@ public class ReservationService {
                         String.format("Gastronome with %s id not found",reservationRequest.gastronomeId())
                 ));
         Reservation reservation = reservationMapper.toEntity(reservationRequest);
-        reservation.setGastronomeId(reservationRequest.gastronomeId());
+        mapReservationToGastronome(reservationRequest,reservation);
         Reservation reservationInDb = reservationRepository.save(reservation);
         return reservationMapper.toDto(reservationInDb);
     }
@@ -53,5 +56,9 @@ public class ReservationService {
                         String.format("Gastronome with %s id not found",id)
                 ));
         reservationRepository.deleteById(id);
+    }
+    public void mapReservationToGastronome(ReservationRequest reservationRequest, Reservation reservation){
+        GastronomeDto gastronomeDto = gastronomeService.getById(reservationRequest.gastronomeId());
+        reservation.setGastronomeId(gastronomeDto.getId());
     }
 }
