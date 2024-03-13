@@ -1,0 +1,1 @@
+ALTER TABLE gastronomies DROP CONSTRAINT gastronomies_type_of_gastronome_check;
