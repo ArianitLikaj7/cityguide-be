@@ -1,0 +1,5 @@
+ALTER TABLE gastronomies
+ALTER COLUMN rating TYPE BIGINT;
+
+ALTER TABLE gastronomies
+    ALTER COLUMN rating SET NOT NULL;

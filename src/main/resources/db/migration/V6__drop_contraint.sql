@@ -1,0 +1,2 @@
+ALTER TABLE gastronome_attachments
+DROP CONSTRAINT gastronome_attachments_gastronome_id_fkey;

@@ -13,6 +13,7 @@ public record GastronomeRequest(
         boolean sponsored,
         TypeOfGastronome typeOfGastronome,
         List<String> attachments,
+        Integer rating,
         String description,
         Double price,
         String phoneNumber

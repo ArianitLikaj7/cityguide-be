@@ -30,7 +30,7 @@ public class Gastronome extends BaseEntity{
     @Column(nullable = false)
     private Double latitude;
 
-    @Column(name = "rating")
+    @Column(name = "rating", nullable = false)
     private Integer rating;
 
     @Column(length = 500)

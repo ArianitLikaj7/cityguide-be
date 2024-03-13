@@ -35,15 +35,24 @@ public class CityController {
     public ResponseEntity<List<CityDto>> getAll(){
         return new ResponseEntity<>(cityService.getAll(), HttpStatus.OK);
     }
+
     @GetMapping("/getCityByPrefix")
     public CityDto getCitiesByPrefix(@RequestParam String prefix) {
         return cityService.findCitiesByCityPrefix(prefix);
     }
+
+
     @PutMapping("/{id}")
     public ResponseEntity<CityDto> update(
             @PathVariable Long id,
             @RequestBody Map<String,Object> fields) {
         CityDto updatedCity = cityService.update(id, fields);
         return new ResponseEntity<>(updatedCity, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        cityService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
