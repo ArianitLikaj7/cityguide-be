@@ -40,7 +40,7 @@ public class Gastronome extends BaseEntity{
     private BigDecimal price;
 
     @Column(name = "day")
-    private Integer day ;
+    private Integer day =1;
 
     @Column(name = "phone_number")
     private String phoneNumber;

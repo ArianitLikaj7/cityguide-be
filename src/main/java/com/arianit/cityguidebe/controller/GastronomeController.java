@@ -47,6 +47,13 @@ public class GastronomeController {
         return ResponseEntity.ok(gastronomeDtos);
     }
 
+    @GetMapping("/theMostVisited")
+    public ResponseEntity<List<GastronomeDto>> getTheMostVisited() {
+        List<GastronomeDto> gastronomeDtos = gastronomeService.getTheMostVisitedGastronomes();
+        return ResponseEntity.ok(gastronomeDtos);
+    }
+
+
     @GetMapping("/byCityId/{cityId}")
     public ResponseEntity<List<GastronomeDto>> getGastronomesByCityId(@PathVariable long cityId) {
         List<GastronomeDto> gastronomes = gastronomeService.getGastronomesByCityId(cityId);

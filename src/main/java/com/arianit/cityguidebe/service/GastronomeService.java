@@ -85,6 +85,16 @@ public class GastronomeService {
                 .map(gastronomeMapper::toDto)
                 .collect(toList());
     }
+
+    public List<GastronomeDto> getTheMostVisitedGastronomes() {
+        List<Gastronome> gastronomes = gastronomeRepository.findAll();
+        List<GastronomeDto> sponsoredGastronomes = gastronomes.stream()
+                .filter(Gastronome::isSponsored)
+                .map(gastronomeMapper::toDto)
+                .collect(Collectors.toList());
+        return sponsoredGastronomes;
+    }
+
     private void mapCityToGastronome(GastronomeRequest gastronomeRequest, Gastronome gastronome) {
         CityDto city = cityService.getById(gastronomeRequest.cityId());
         gastronome.setCityId(city.getId());
