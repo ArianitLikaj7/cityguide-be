@@ -20,7 +20,6 @@ public class CityMapper implements GenericMapper<City, CityDto, CityRequest> {
     @Override
     public CityDto toDto(City city) {
         CityDto cityDto = modelMapper.map(city, CityDto.class);
-        // Map the gastronomes manually
         if (city.getGastronomes() != null) {
             cityDto.setGastronomeDtos(city.getGastronomes()
                     .stream()

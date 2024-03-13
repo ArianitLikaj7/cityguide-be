@@ -4,6 +4,7 @@ import com.arianit.cityguidebe.dto.TripDto;
 import com.arianit.cityguidebe.dto.request.TripRequest;
 import com.arianit.cityguidebe.entity.TypeOfGastronome;
 import com.arianit.cityguidebe.service.TripService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +21,13 @@ public class TripController {
 
 
     @PostMapping
-    public ResponseEntity<TripDto> createAdvanceTrip(@RequestBody TripRequest tripRequest) {
+    public ResponseEntity<TripDto> createAdvanceTrip(@RequestBody @Valid TripRequest tripRequest) {
         TripDto citiesWithGastronomies = tripService.createAdvanceTrip(
                 tripRequest.getCityIds(), tripRequest.getTypeOfGastronomes(), tripRequest.getNumOfDays());
         return new ResponseEntity<>(citiesWithGastronomies, HttpStatus.OK);
     }
     @GetMapping("/generate")
-    public ResponseEntity<TripDto> generateTrip(@RequestBody TripRequest tripRequest) {
+    public ResponseEntity<TripDto> generateTrip(@RequestBody @Valid TripRequest tripRequest) {
         List<Long> cityIds = tripRequest.getCityIds();
         List<TypeOfGastronome> gastronomyTypes = tripRequest.getTypeOfGastronomes();
         int numOfDays = tripRequest.getNumOfDays();

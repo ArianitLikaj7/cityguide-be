@@ -2,9 +2,12 @@ package com.arianit.cityguidebe.controller;
 
 import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.request.CityRequest;
+import com.arianit.cityguidebe.dto.request.PageRequest;
 import com.arianit.cityguidebe.service.CityService;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +24,7 @@ public class CityController {
     private final CityService cityService;
 
     @PostMapping
-    public ResponseEntity<CityDto> create (@RequestBody CityRequest cityRequest) {
+    public ResponseEntity<CityDto> create (@RequestBody @Valid CityRequest cityRequest) {
         return new ResponseEntity<>(cityService.create(cityRequest), HttpStatus.CREATED);
     }
 
@@ -29,6 +32,11 @@ public class CityController {
     public ResponseEntity<CityDto> getById(@PathVariable Long id){
          CityDto cityDto = cityService.getById(id);
         return new ResponseEntity<>(cityDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/pagable")
+    public Page<CityDto> getAllPagable(@Valid PageRequest pageRequest){
+        return cityService.getAllPagable(pageRequest);
     }
 
     @GetMapping

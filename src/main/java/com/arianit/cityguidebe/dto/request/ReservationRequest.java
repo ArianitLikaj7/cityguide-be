@@ -1,7 +1,9 @@
 package com.arianit.cityguidebe.dto.request;
 
+import jakarta.validation.constraints.NotBlank;
+
 public record ReservationRequest(
-        Long gastronomeId,
+        @NotBlank Long gastronomeId,
         String reservationDate,
         Integer numberOfPeople,
         String specialRequests,

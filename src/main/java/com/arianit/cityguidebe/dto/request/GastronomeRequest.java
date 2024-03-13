@@ -1,15 +1,16 @@
 package com.arianit.cityguidebe.dto.request;
 
 import com.arianit.cityguidebe.entity.TypeOfGastronome;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 
 public record GastronomeRequest(
-        Long cityId,
+        @NotBlank Long cityId,
         String nameOfGastronome,
         String schedule,
-        Double longitude,
-        Double latitude,
+        @NotBlank Double longitude,
+        @NotBlank Double latitude,
         boolean sponsored,
         TypeOfGastronome typeOfGastronome,
         List<String> attachments,

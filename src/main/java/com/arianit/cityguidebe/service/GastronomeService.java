@@ -5,12 +5,15 @@ import com.arianit.cityguidebe.dao.GastronomeRepository;
 import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.request.GastronomeRequest;
+import com.arianit.cityguidebe.dto.request.PageRequest;
 import com.arianit.cityguidebe.entity.City;
 import com.arianit.cityguidebe.entity.Gastronome;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.GastronomeMapper;
 import com.arianit.cityguidebe.util.ReflectionUtil;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,6 +54,11 @@ public class GastronomeService {
         return gastronomes.stream()
                 .map(gastronomeMapper::toDto)
                 .collect(Collectors.toList());
+    }
+    public Page<GastronomeDto> getAllPagable(@Valid PageRequest pageRequest){
+        return gastronomeRepository.findAll(pageRequest.getPageable()).map(
+                gastronomeMapper::toDto
+        );
     }
 
     public void delete (Long id) {

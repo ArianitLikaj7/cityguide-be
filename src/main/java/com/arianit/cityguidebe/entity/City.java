@@ -27,6 +27,9 @@ public class City extends BaseEntity {
     )
     private String cityPrefix;
 
+    @Column(name = "taxi_phone_number")
+    private String taxiPhoneNumber;
+
     @OneToMany(mappedBy = "city")
     @JsonManagedReference
     private List<Gastronome> gastronomes;

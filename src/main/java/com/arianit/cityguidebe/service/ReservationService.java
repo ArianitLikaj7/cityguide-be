@@ -2,15 +2,19 @@ package com.arianit.cityguidebe.service;
 
 import com.arianit.cityguidebe.dao.GastronomeRepository;
 import com.arianit.cityguidebe.dao.ReservationRepository;
+import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.ReservationDto;
 import com.arianit.cityguidebe.dto.request.GastronomeRequest;
+import com.arianit.cityguidebe.dto.request.PageRequest;
 import com.arianit.cityguidebe.dto.request.ReservationRequest;
 import com.arianit.cityguidebe.entity.Gastronome;
 import com.arianit.cityguidebe.entity.Reservation;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.ReservationMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,7 +46,11 @@ public class ReservationService {
                 ));
         return reservationMapper.toDto(reservationInDb);
     }
-
+    public Page<ReservationDto> getAllPagable(@Valid PageRequest pageRequest){
+        return reservationRepository.findAll(pageRequest.getPageable()).map(
+                reservationMapper::toDto
+        );
+    }
     public List<ReservationDto> getAll(){
         List<Reservation> reservations = reservationRepository.findAll();
         return reservations.stream()

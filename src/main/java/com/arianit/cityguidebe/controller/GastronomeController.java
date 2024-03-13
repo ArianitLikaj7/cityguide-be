@@ -3,7 +3,10 @@ package com.arianit.cityguidebe.controller;
 import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.request.GastronomeRequest;
+import com.arianit.cityguidebe.dto.request.PageRequest;
 import com.arianit.cityguidebe.service.GastronomeService;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +25,7 @@ public class GastronomeController {
     }
 
     @PostMapping
-    public ResponseEntity<GastronomeDto> createGastronome(@RequestBody GastronomeRequest gastronomeRequest) {
+    public ResponseEntity<GastronomeDto> createGastronome(@RequestBody @Valid GastronomeRequest gastronomeRequest) {
         GastronomeDto createdGastronome = gastronomeService.create(gastronomeRequest);
         return new ResponseEntity<>(createdGastronome, HttpStatus.CREATED);
     }
@@ -33,14 +36,19 @@ public class GastronomeController {
         return ResponseEntity.ok(gastronomeDto);
     }
 
+    @GetMapping("/pagable")
+    public Page<GastronomeDto> getAllPagable(@Valid PageRequest pageRequest){
+        return gastronomeService.getAllPagable(pageRequest);
+    }
+
     @GetMapping
-    public ResponseEntity<List<GastronomeDto>> getAllGastronomes() {
+    public ResponseEntity<List<GastronomeDto>> getAll() {
         List<GastronomeDto> gastronomeDtos = gastronomeService.getAll();
         return ResponseEntity.ok(gastronomeDtos);
     }
 
     @GetMapping("/byCityId/{cityId}")
-    public ResponseEntity<List<GastronomeDto>> getGastronomesByLocationId(@PathVariable long cityId) {
+    public ResponseEntity<List<GastronomeDto>> getGastronomesByCityId(@PathVariable long cityId) {
         List<GastronomeDto> gastronomes = gastronomeService.getGastronomesByCityId(cityId);
         return new ResponseEntity<>(gastronomes, HttpStatus.OK);
     }
@@ -51,6 +59,7 @@ public class GastronomeController {
         GastronomeDto updatedGastronome = gastronomeService.update(id, fields);
         return new ResponseEntity<>(updatedGastronome, HttpStatus.OK);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGastronome(@PathVariable Long id) {
         gastronomeService.delete(id);

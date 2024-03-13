@@ -3,11 +3,14 @@ package com.arianit.cityguidebe.service;
 import com.arianit.cityguidebe.dao.CityRepository;
 import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.request.CityRequest;
+import com.arianit.cityguidebe.dto.request.PageRequest;
 import com.arianit.cityguidebe.entity.City;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.CityMapper;
 import com.arianit.cityguidebe.util.ReflectionUtil;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,12 +37,16 @@ public class CityService {
         return cityMapper.toDto(city);
     }
 
-    // pagable
     public List<CityDto> getAll() {
         List<City> cities = cityRepository.findAll();
         return cities.stream()
                 .map(cityMapper::toDto)
                 .collect(Collectors.toList());
+    }
+    public Page<CityDto> getAllPagable(@Valid PageRequest pageRequest){
+        return cityRepository.findAll(pageRequest.getPageable()).map(
+                cityMapper::toDto
+        );
     }
 
     public CityDto update(Long id, Map<String, Object> fields) {
