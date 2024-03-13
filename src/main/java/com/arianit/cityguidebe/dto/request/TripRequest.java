@@ -12,9 +12,7 @@ import java.util.List;
 @Setter
 @Builder
 public class TripRequest {
-    @NotBlank
     private List<TypeOfGastronome> typeOfGastronomes;
-    @NotBlank
     private List<Long> cityIds;
     private int numOfDays;
 }
