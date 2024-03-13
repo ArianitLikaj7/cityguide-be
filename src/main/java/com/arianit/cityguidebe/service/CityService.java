@@ -53,6 +53,12 @@ public class CityService {
         return cityMapper.toDto(cityRepository.save(cityInDb));
     }
 
+    public CityDto findCitiesByCityPrefix(String cityPrefix) {
+        City city = cityRepository.findCitiesByCityPrefix(cityPrefix);
+        CityDto cityDto = cityMapper.toDto(city);
+        return cityDto;
+    }
+
     public void delete(Long id) {
         City cityInDb = cityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(

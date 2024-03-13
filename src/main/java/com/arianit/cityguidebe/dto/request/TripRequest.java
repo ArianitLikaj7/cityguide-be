@@ -13,4 +13,5 @@ import java.util.List;
 public class TripRequest {
     private List<TypeOfGastronome> typeOfGastronomes;
     private List<Long> cityIds;
+    private int numOfDays;
 }

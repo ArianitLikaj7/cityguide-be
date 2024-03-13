@@ -17,4 +17,9 @@ public class GastronomeDto extends BaseDto {
     private String typeOfGastronome;
     private boolean sponsored;
     private List<String> attachments;
+    private Integer rating;
+    private String description;
+    private Double price;
+    private String phoneNumber;
+    private Integer day;
 }

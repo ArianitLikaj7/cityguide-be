@@ -9,11 +9,15 @@ import com.arianit.cityguidebe.entity.City;
 import com.arianit.cityguidebe.entity.Gastronome;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.GastronomeMapper;
+import com.arianit.cityguidebe.util.ReflectionUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +59,23 @@ public class GastronomeService {
                         String.format("Gastronome with %s id not found",id)
                 ));
         gastronomeRepository.deleteById(id);
+    }
+
+    public GastronomeDto update(Long id, Map<String, Object> fields) {
+        Gastronome gastronomeInDb = gastronomeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        String.format("city with %s not found", id)
+                ));
+        fields.forEach((key, value) ->{
+            ReflectionUtil.setFieldValue(gastronomeInDb, key, value);
+        });
+        return gastronomeMapper.toDto(gastronomeRepository.save(gastronomeInDb));
+    }
+    public List<GastronomeDto> getGastronomesByCityId(Long cityId){
+        List<Gastronome> gastronomes = gastronomeRepository.findByCityId(cityId);
+        return gastronomes.stream()
+                .map(gastronomeMapper::toDto)
+                .collect(toList());
     }
     private void mapCityToGastronome(GastronomeRequest gastronomeRequest, Gastronome gastronome) {
         CityDto city = cityService.getById(gastronomeRequest.cityId());

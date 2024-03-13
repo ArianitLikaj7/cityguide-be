@@ -12,6 +12,9 @@ public record GastronomeRequest(
         Double latitude,
         boolean sponsored,
         TypeOfGastronome typeOfGastronome,
-        List<String> attachments
+        List<String> attachments,
+        String description,
+        Double price,
+        String phoneNumber
 ) {
 }

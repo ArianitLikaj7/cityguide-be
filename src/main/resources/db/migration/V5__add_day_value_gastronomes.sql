@@ -1,0 +1,2 @@
+ALTER TABLE gastronomies
+ ADD COLUMN day BIGINT;

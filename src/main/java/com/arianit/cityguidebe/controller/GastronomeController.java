@@ -1,5 +1,6 @@
 package com.arianit.cityguidebe.controller;
 
+import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.request.GastronomeRequest;
 import com.arianit.cityguidebe.service.GastronomeService;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/gastronomes")
@@ -37,6 +39,18 @@ public class GastronomeController {
         return ResponseEntity.ok(gastronomeDtos);
     }
 
+    @GetMapping("/byCityId/{cityId}")
+    public ResponseEntity<List<GastronomeDto>> getGastronomesByLocationId(@PathVariable long cityId) {
+        List<GastronomeDto> gastronomes = gastronomeService.getGastronomesByCityId(cityId);
+        return new ResponseEntity<>(gastronomes, HttpStatus.OK);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<GastronomeDto> update(
+            @PathVariable Long id,
+            @RequestBody Map<String,Object> fields) {
+        GastronomeDto updatedGastronome = gastronomeService.update(id, fields);
+        return new ResponseEntity<>(updatedGastronome, HttpStatus.OK);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGastronome(@PathVariable Long id) {
         gastronomeService.delete(id);

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -29,6 +30,20 @@ public class Gastronome extends BaseEntity{
     @Column(nullable = false)
     private Double latitude;
 
+    @Column(name = "rating")
+    private Integer rating;
+
+    @Column(length = 500)
+    private String description;
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal price;
+
+    @Column(name = "day")
+    private Integer day = 1;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
     @Column()
     private boolean sponsored;
 

@@ -47,18 +47,21 @@ public class SecurityConfig {
 
         return http.build();
     }
-
     private String[] getNoAuthEndpoints(){
         return new String[] {
-                "api/v1/auth/login",
-                "/trips",
-                "api/v1/auth/refresh",
+                "/api/v1/auth/login",
+                "/trips/**",
+                "/cities/**",
+                "/gastronomes/**",
+                "/reservations/**",
+                "/api/v1/auth/refresh",
                 "/v3/api-docs/**",
                 "/v3/api-docs.yaml",
                 "/swagger-ui.html",
                 "/swagger-ui/**"
         };
     }
+
 
     @Bean
     public UrlBasedCorsConfigurationSource corsConfigurationSource() {

@@ -21,14 +21,16 @@ public class TripController {
 
     @PostMapping
     public ResponseEntity<TripDto> createAdvanceTrip(@RequestBody TripRequest tripRequest) {
-        TripDto citiesWithGastronomies = tripService.createAdvanceTrip(tripRequest.getCityIds(), tripRequest.getTypeOfGastronomes());
+        TripDto citiesWithGastronomies = tripService.createAdvanceTrip(
+                tripRequest.getCityIds(), tripRequest.getTypeOfGastronomes(), tripRequest.getNumOfDays());
         return new ResponseEntity<>(citiesWithGastronomies, HttpStatus.OK);
     }
     @GetMapping("/generate")
     public ResponseEntity<TripDto> generateTrip(@RequestBody TripRequest tripRequest) {
         List<Long> cityIds = tripRequest.getCityIds();
         List<TypeOfGastronome> gastronomyTypes = tripRequest.getTypeOfGastronomes();
-        TripDto tripDto = tripService.generateAdvanceTrip(cityIds, gastronomyTypes);
+        int numOfDays = tripRequest.getNumOfDays();
+        TripDto tripDto = tripService.generateAdvanceTrip(cityIds, gastronomyTypes, numOfDays);
         return new ResponseEntity<>(tripDto, HttpStatus.OK);
     }
 

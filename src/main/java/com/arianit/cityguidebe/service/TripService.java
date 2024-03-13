@@ -29,7 +29,7 @@ public class TripService {
     private final CityMapper cityMapper;
     private final GastronomeMapper gastronomeMapper;
 
-    public TripDto createAdvanceTrip(List<Long> cityIds, List<TypeOfGastronome> gastronomyTypes) {
+    public TripDto createAdvanceTrip(List<Long> cityIds, List<TypeOfGastronome> gastronomyTypes, int numOfDays) {
         List<City> cities = cityRepository.findAllById(cityIds);
         Trip trip = new Trip();
         trip.setCityIds(cityIds);
@@ -60,7 +60,7 @@ public class TripService {
         return tripDto;
     }
 
-    public TripDto generateAdvanceTrip(List<Long> cityIds, List<TypeOfGastronome> gastronomyTypes) {
+    public TripDto generateAdvanceTrip(List<Long> cityIds, List<TypeOfGastronome> gastronomyTypes, int numOfDays) {
         List<City> cities = cityRepository.findAllById(cityIds);
 
         List<CityDto> cityDtos = cities.stream()
