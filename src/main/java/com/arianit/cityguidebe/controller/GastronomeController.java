@@ -41,7 +41,7 @@ public class GastronomeController {
         return gastronomeService.getAllPagable(pageRequest);
     }
 
-    @GetMapping
+    @GetMapping("getAll")
     public ResponseEntity<List<GastronomeDto>> getAll() {
         List<GastronomeDto> gastronomeDtos = gastronomeService.getAll();
         return ResponseEntity.ok(gastronomeDtos);
