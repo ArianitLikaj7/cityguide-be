@@ -31,7 +31,7 @@ public class TripController {
         List<Long> cityIds = tripRequest.getCityIds();
         List<TypeOfGastronome> gastronomyTypes = tripRequest.getTypeOfGastronomes();
         int numOfDays = tripRequest.getNumOfDays();
-        TripDto tripDto = tripService.generateAdvanceTrip(cityIds, gastronomyTypes, numOfDays);
+        TripDto tripDto = tripService.generateAdvanceTrip2(cityIds, gastronomyTypes, numOfDays);
         return new ResponseEntity<>(tripDto, HttpStatus.OK);
     }
 
