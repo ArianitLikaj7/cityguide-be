@@ -26,7 +26,7 @@ public class TripController {
                 tripRequest.getCityIds(), tripRequest.getTypeOfGastronomes(), tripRequest.getNumOfDays());
         return new ResponseEntity<>(citiesWithGastronomies, HttpStatus.OK);
     }
-    @GetMapping("/generate")
+    @PostMapping("/generate")
     public ResponseEntity<TripDto> generateTrip(@RequestBody TripRequest tripRequest) {
         List<Long> cityIds = tripRequest.getCityIds();
         List<TypeOfGastronome> gastronomyTypes = tripRequest.getTypeOfGastronomes();
