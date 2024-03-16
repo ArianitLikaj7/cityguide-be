@@ -2,8 +2,9 @@ package com.arianit.cityguidebe.entity;
 
 public enum TypeOfGastronome {
     CAFFE,
-    RESTAURANT,
+
     HOTEL,
+    RESTAURANT,
     FASTFOOD,
     CULTURE
 }

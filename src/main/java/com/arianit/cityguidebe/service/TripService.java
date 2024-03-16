@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,41 @@ public class TripService {
     private final CityMapper cityMapper;
     private final GastronomeMapper gastronomeMapper;
 
+
+    public TripDto createAdvanceTrip1(List<Long> cityIds, List<TypeOfGastronome> gastronomyTypes, int numOfDays) {
+        List<City> cities = cityRepository.findAllById(cityIds);
+        Trip trip = new Trip();
+        trip.setCityIds(cityIds);
+        trip.setTypesOfGastronome(gastronomyTypes);
+        trip = tripRepository.save(trip);
+
+        List<CityDto> cityDtos = cities.stream()
+                .map(city -> {
+                    List<Gastronome> sponsoredGastronomies = city.getGastronomes().stream()
+                            .filter(g -> gastronomyTypes.contains(g.getTypeOfGastronome()) && g.isSponsored())
+                            .collect(Collectors.toList());
+                    List<Gastronome> nonSponsoredGastronomies = city.getGastronomes().stream()
+                            .filter(g -> gastronomyTypes.contains(g.getTypeOfGastronome()) && !g.isSponsored())
+                            .collect(Collectors.toList());
+                    List<Gastronome> combinedGastronomies = new ArrayList<>();
+                    Collections.shuffle(sponsoredGastronomies);
+                    Collections.shuffle(nonSponsoredGastronomies);
+                    combinedGastronomies.addAll(sponsoredGastronomies);
+                    combinedGastronomies.addAll(nonSponsoredGastronomies);
+                    city.setGastronomes(combinedGastronomies);
+                    return cityMapper.toDto(city);
+                })
+                .collect(Collectors.toList());
+
+        TripDto tripDto = TripDto.builder()
+                .id(trip.getId())
+                .cityIds(cityIds)
+                .typesOfGastronome(gastronomyTypes)
+                .cityDtos(cityDtos)
+                .build();
+
+        return tripDto;
+    }
     public TripDto createAdvanceTrip(List<Long> cityIds, List<TypeOfGastronome> gastronomyTypes, int numOfDays) {
         List<City> cities = cityRepository.findAllById(cityIds);
         Trip trip = new Trip();
@@ -59,7 +95,35 @@ public class TripService {
 
         return tripDto;
     }
+    public TripDto generateAdvanceTrip2(List<Long> cityIds, List<TypeOfGastronome> gastronomyTypes, int numOfDays) {
+        List<City> cities = cityRepository.findAllById(cityIds);
 
+        List<CityDto> cityDtos = cities.stream()
+                .map(city -> {
+                    List<Gastronome> sponsoredGastronomies = city.getGastronomes().stream()
+                            .filter(g -> gastronomyTypes.contains(g.getTypeOfGastronome()) && g.isSponsored())
+                            .collect(Collectors.toList());
+                    List<Gastronome> nonSponsoredGastronomies = city.getGastronomes().stream()
+                            .filter(g -> gastronomyTypes.contains(g.getTypeOfGastronome()) && !g.isSponsored())
+                            .collect(Collectors.toList());
+                    List<Gastronome> combinedGastronomies = new ArrayList<>();
+                    Collections.shuffle(sponsoredGastronomies);
+                    Collections.shuffle(nonSponsoredGastronomies);
+                    combinedGastronomies.addAll(sponsoredGastronomies);
+                    combinedGastronomies.addAll(nonSponsoredGastronomies);
+                    city.setGastronomes(combinedGastronomies);
+                    return cityMapper.toDto(city);
+                })
+                .collect(Collectors.toList());
+
+        TripDto tripDto = TripDto.builder()
+                .cityIds(cityIds)
+                .typesOfGastronome(gastronomyTypes)
+                .cityDtos(cityDtos)
+                .build();
+
+        return tripDto;
+    }
     public TripDto generateAdvanceTrip(List<Long> cityIds, List<TypeOfGastronome> gastronomyTypes, int numOfDays) {
         List<City> cities = cityRepository.findAllById(cityIds);
 

@@ -14,10 +14,10 @@ import com.arianit.cityguidebe.util.ReflectionUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -88,11 +88,11 @@ public class GastronomeService {
 
     public List<GastronomeDto> getTheMostVisitedGastronomes() {
         List<Gastronome> gastronomes = gastronomeRepository.findAll();
-        List<GastronomeDto> sponsoredGastronomes = gastronomes.stream()
+        Set<GastronomeDto> sponsoredGastronomesSet = new HashSet<>(gastronomes.stream()
                 .filter(Gastronome::isSponsored)
                 .map(gastronomeMapper::toDto)
-                .collect(Collectors.toList());
-        return sponsoredGastronomes;
+                .collect(Collectors.toList()));
+        return new ArrayList<>(sponsoredGastronomesSet);
     }
 
     private void mapCityToGastronome(GastronomeRequest gastronomeRequest, Gastronome gastronome) {
