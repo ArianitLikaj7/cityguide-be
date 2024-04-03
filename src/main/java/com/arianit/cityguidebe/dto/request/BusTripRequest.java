@@ -4,9 +4,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
-@Builder
+
 public record BusTripRequest(
         String nameOfBus,
         int numberOfDays,
