@@ -22,7 +22,7 @@ public class TripController {
 
     @PostMapping
     public ResponseEntity<TripDto> createAdvanceTrip(@RequestBody TripRequest tripRequest) {
-        TripDto citiesWithGastronomies = tripService.createAdvanceTrip(
+        TripDto citiesWithGastronomies = tripService.createAdvanceTrip1(
                 tripRequest.getCityIds(), tripRequest.getTypeOfGastronomes(), tripRequest.getNumOfDays());
         return new ResponseEntity<>(citiesWithGastronomies, HttpStatus.OK);
     }
