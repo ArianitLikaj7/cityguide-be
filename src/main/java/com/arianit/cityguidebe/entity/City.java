@@ -1,5 +1,6 @@
 package com.arianit.cityguidebe.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -34,6 +35,13 @@ public class City extends BaseEntity {
     @JsonManagedReference
     private List<Gastronome> gastronomes;
 
+    @ManyToOne
+    @JoinColumn(name = "state_id", insertable = false, updatable = false)
+    @JsonBackReference
+    private State state;
+
+    @Column(name = "state_id")
+    private Long stateId;
 
 
 
