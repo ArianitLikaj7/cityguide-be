@@ -1,10 +1,15 @@
 package com.arianit.cityguidebe.service;
 
 import com.arianit.cityguidebe.dao.CityRepository;
+import com.arianit.cityguidebe.dao.StateRepository;
 import com.arianit.cityguidebe.dto.CityDto;
+import com.arianit.cityguidebe.dto.StateDto;
 import com.arianit.cityguidebe.dto.request.CityRequest;
+import com.arianit.cityguidebe.dto.request.GastronomeRequest;
 import com.arianit.cityguidebe.dto.request.PageRequest;
 import com.arianit.cityguidebe.entity.City;
+import com.arianit.cityguidebe.entity.Gastronome;
+import com.arianit.cityguidebe.entity.State;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.CityMapper;
 import com.arianit.cityguidebe.util.ReflectionUtil;
@@ -22,9 +27,16 @@ import java.util.stream.Collectors;
 public class CityService {
     private final CityRepository cityRepository;
     private final CityMapper cityMapper;
+    private final StateRepository stateRepository;
+    private final StateService stateService;
 
     public CityDto create(CityRequest cityRequest) {
+        State stateInDb = stateRepository.findById(cityRequest.stateId()).orElseThrow(
+                () -> new ResourceNotFoundException(
+                        String.format("State with id %s not found",cityRequest.stateId()))
+        );
         City city = cityMapper.toEntity(cityRequest);
+        mapStateToCity(cityRequest,city);
         city = cityRepository.save(city);
         return cityMapper.toDto(city);
     }
@@ -73,4 +85,10 @@ public class CityService {
                 ));
         cityRepository.deleteById(id);
     }
+
+    private void mapStateToCity(CityRequest cityRequest, City city) {
+        StateDto state = stateService.getById(cityRequest.stateId());
+        city.setStateId(state.getId());
+    }
+
 }

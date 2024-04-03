@@ -60,7 +60,8 @@ public class SecurityConfig {
                 "/cities/**",
                 "/trips/**",
                 "/trips/generate",
-                "/reservation/**"
+                "/reservation/**",
+                "/states/**"
         };
     }
 

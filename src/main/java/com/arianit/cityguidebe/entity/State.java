@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 public class State extends BaseEntity{
 
-    @Column(nullable = false, name = "name_of_state")
+    @Column(nullable = false, name = "name_of_state", unique = true)
     private String nameOfState;
 
     @OneToMany(mappedBy = "state")
