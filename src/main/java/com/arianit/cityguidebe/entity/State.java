@@ -24,4 +24,9 @@ public class State extends BaseEntity{
     @OneToMany(mappedBy = "state")
     @JsonManagedReference
     private List<City> cities;
+
+    @OneToMany(mappedBy = "state")
+    @JsonManagedReference
+    private List<BusTrip> busTrips;
+
 }

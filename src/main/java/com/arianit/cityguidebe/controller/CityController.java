@@ -63,4 +63,10 @@ public class CityController {
         cityService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+
+    @GetMapping("/state/{stateId}")
+    public List<CityDto> getCitiesByStateId(@PathVariable Long stateId) {
+        return cityService.getCitiesByStateId(stateId);
+    }
 }

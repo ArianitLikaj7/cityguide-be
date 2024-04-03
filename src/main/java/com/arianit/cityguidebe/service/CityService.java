@@ -86,6 +86,13 @@ public class CityService {
         cityRepository.deleteById(id);
     }
 
+    public List<CityDto> getCitiesByStateId(Long stateId) {
+        List<City> cities = cityRepository.findByStateId(stateId);
+        return cities.stream()
+                .map(cityMapper::toDto) // Map entities to DTOs
+                .collect(Collectors.toList());
+    }
+
     private void mapStateToCity(CityRequest cityRequest, City city) {
         StateDto state = stateService.getById(cityRequest.stateId());
         city.setStateId(state.getId());
