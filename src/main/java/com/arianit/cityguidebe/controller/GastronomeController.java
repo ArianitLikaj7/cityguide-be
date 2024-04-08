@@ -4,6 +4,7 @@ import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.request.GastronomeRequest;
 import com.arianit.cityguidebe.dto.request.PageRequest;
+import com.arianit.cityguidebe.entity.TypeOfGastronome;
 import com.arianit.cityguidebe.service.GastronomeService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -71,5 +73,9 @@ public class GastronomeController {
     public ResponseEntity<Void> deleteGastronome(@PathVariable Long id) {
         gastronomeService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/typesOfGastronome")
+    public List<TypeOfGastronome> getAllTypesOfGastronome() {
+        return Arrays.asList(TypeOfGastronome.values());
     }
 }

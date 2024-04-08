@@ -70,9 +70,7 @@ public class TripService {
         Trip trip = new Trip();
         trip.setCityIds(cityIds);
         trip.setTypesOfGastronome(gastronomyTypes);
-
         trip = tripRepository.save(trip);
-
         List<CityDto> cityDtos = cities.stream()
                 .map(city -> {
                     List<Gastronome> filteredGastronomies = city.getGastronomes().stream()
@@ -85,19 +83,16 @@ public class TripService {
                     return cityMapper.toDto(city);
                 })
                 .collect(Collectors.toList());
-
         TripDto tripDto = TripDto.builder()
                 .id(trip.getId())
                 .cityIds(cityIds)
                 .typesOfGastronome(gastronomyTypes)
                 .cityDtos(cityDtos)
                 .build();
-
         return tripDto;
     }
     public TripDto generateAdvanceTrip2(List<Long> cityIds, List<TypeOfGastronome> gastronomyTypes, int numOfDays) {
         List<City> cities = cityRepository.findAllById(cityIds);
-
         List<CityDto> cityDtos = cities.stream()
                 .map(city -> {
                     List<Gastronome> sponsoredGastronomies = city.getGastronomes().stream()
@@ -124,9 +119,9 @@ public class TripService {
 
         return tripDto;
     }
-    public TripDto generateAdvanceTrip(List<Long> cityIds, List<TypeOfGastronome> gastronomyTypes, int numOfDays) {
+    public TripDto generateAdvanceTrip(List<Long> cityIds,
+                                       List<TypeOfGastronome> gastronomyTypes, int numOfDays) {
         List<City> cities = cityRepository.findAllById(cityIds);
-
         List<CityDto> cityDtos = cities.stream()
                 .map(city -> {
                     List<Gastronome> filteredGastronomies = city.getGastronomes().stream()
@@ -145,7 +140,6 @@ public class TripService {
                 .typesOfGastronome(gastronomyTypes)
                 .cityDtos(cityDtos)
                 .build();
-
         return tripDto;
     }
 
@@ -206,14 +200,12 @@ public class TripService {
 
             cityDtos.add(cityDto);
         }
-
         TripDto tripDto = new TripDto();
         tripDto.setId(trip.getId());
         tripDto.setNumOfDays(trip.getNumOfDays());
         tripDto.setCityIds(trip.getCityIds());
         tripDto.setTypesOfGastronome(trip.getTypesOfGastronome());
         tripDto.setCityDtos(cityDtos);
-
         return tripDto;
     }
 

@@ -53,5 +53,13 @@ public class StateService {
     }
 
 
+    public void deleteById (Long id){
+        State stateInDb = stateRepository.findById(id).orElseThrow(
+                ()-> new ResourceNotFoundException(String.format(
+                        "Entity with %s id dosent exist",id
+                ))
+        );
+                stateRepository.deleteById(id);
+    }
 
 }

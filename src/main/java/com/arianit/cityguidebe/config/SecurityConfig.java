@@ -61,7 +61,8 @@ public class SecurityConfig {
                 "/trips/**",
                 "/trips/generate",
                 "/reservation/**",
-                "/states/**"
+                "/states/**",
+                "/api/bustrips/**"
         };
     }
 
