@@ -1,6 +1,5 @@
 package com.arianit.cityguidebe.mapper;
 
-import com.arianit.cityguidebe.dto.BusTripDto;
 import com.arianit.cityguidebe.dto.StateDto;
 import com.arianit.cityguidebe.dto.request.StateRequest;
 import com.arianit.cityguidebe.entity.State;
@@ -18,15 +17,7 @@ public class StateMapper implements GenericMapper<State, StateDto, StateRequest>
 
     @Override
     public StateDto toDto(State entity) {
-        StateDto stateDto = modelMapper.map(entity, StateDto.class);
-        if (entity.getBusTrips() != null) {
-            stateDto.setBusTripDtos(
-                    entity.getBusTrips().stream()
-                            .map(busTrip -> modelMapper.map(busTrip, BusTripDto.class))
-                            .collect(Collectors.toList())
-            );
-        }
-        return stateDto;
+       return  modelMapper.map(entity, StateDto.class);
     }
 
     @Override

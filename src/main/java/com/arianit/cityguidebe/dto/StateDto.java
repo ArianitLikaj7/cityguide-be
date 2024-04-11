@@ -12,6 +12,5 @@ import java.util.List;
 public class StateDto {
     private Long id;
     private String nameOfState;
-    private List<BusTripDto> busTripDtos;
 
 }
