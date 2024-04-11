@@ -29,7 +29,7 @@ public class BusTripService {
     public BusTripDto create(BusTripRequest request){
         BusTrip busTrip = mapper.toEntity(request);
         UserDto currentUser = userService.getCurrentUser();
-        busTrip.setNameOfCompany(currentUser.getUsername());
+        busTrip.setNameOfCompany(currentUser.getFirstName());
         return mapper.toDto(busTripRepository.save(busTrip));
     }
 
