@@ -22,7 +22,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User extends BaseEntity implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -48,9 +48,6 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    @Column(name = "tenant_id")
-    private Long tenantId;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

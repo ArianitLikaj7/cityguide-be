@@ -3,6 +3,7 @@ package com.arianit.cityguidebe.service;
 
 import com.arianit.cityguidebe.dao.BusTripRepository;
 import com.arianit.cityguidebe.dto.BusTripDto;
+import com.arianit.cityguidebe.dto.UserDto;
 import com.arianit.cityguidebe.dto.request.BusTripRequest;
 import com.arianit.cityguidebe.dto.request.PageRequest;
 import com.arianit.cityguidebe.entity.BusTrip;
@@ -23,9 +24,12 @@ public class BusTripService {
 
     private final BusTripRepository busTripRepository;
     private final BusTripMapper mapper;
+    private final UserService userService;
 
     public BusTripDto create(BusTripRequest request){
         BusTrip busTrip = mapper.toEntity(request);
+        UserDto currentUser = userService.getCurrentUser();
+        busTrip.setNameOfCompany(currentUser.getUsername());
         return mapper.toDto(busTripRepository.save(busTrip));
     }
 
