@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 public class BusTripDto {
-
+    private Long id;
     private String nameOfCompany;
     private String startStation;
     private String destination;
