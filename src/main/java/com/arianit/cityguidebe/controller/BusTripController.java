@@ -29,6 +29,11 @@ public class BusTripController {
         return new ResponseEntity<>(busTripService.getAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/my-busTrips")
+    public ResponseEntity<List<BusTripDto>> getMyBusTrips(){
+        return new ResponseEntity<>(busTripService.getAllByNameOfCompany(), HttpStatus.OK);
+    }
+
     @GetMapping("/get")
     public ResponseEntity<List<BusTripDto>> getAll(
             @RequestParam String startLocation,

@@ -10,5 +10,6 @@ import java.util.List;
 
 public interface BusTripRepository extends JpaRepository<BusTrip, Long> {
     List<BusTrip> findByStartStationAndDestination(String startStation, String destination);
+    List<BusTrip> findByNameOfCompany(String firstName);
     Page<BusTrip> findByStartStationAndDestination(String startStation, String destination, Pageable pagable);
 }

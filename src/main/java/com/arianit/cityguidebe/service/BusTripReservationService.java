@@ -24,11 +24,11 @@ public class BusTripReservationService {
     private final UserService userService;
     private final BusTripReservationMapper busTripReservationMapper;
     private final BusTripService busTripService;
-    UserDto currentUser = userService.getCurrentUser();
 
     public BusTripReservationDto create (BusTripReservationRequest request){
         BusTripReservation busTripReservation = busTripReservationMapper.toEntity(request);
         mapBusTripToBusTripReservation(request, busTripReservation);
+        UserDto currentUser = userService.getCurrentUser();
         busTripReservation.setUsername(currentUser.getUsername());
         return busTripReservationMapper.toDto(busTripReservationRepository.save(busTripReservation));
     }
@@ -75,6 +75,7 @@ public class BusTripReservationService {
 
 
     public List<BusTripReservationDto> findBusTripReservationByUsername() {
+        UserDto currentUser = userService.getCurrentUser();
         List<BusTripReservation> busTripReservations =
                 busTripReservationRepository.findBusTripReservationByUsername(currentUser.getUsername());
         return busTripReservations.stream()
