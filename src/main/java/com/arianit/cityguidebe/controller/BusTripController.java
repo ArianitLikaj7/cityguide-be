@@ -1,6 +1,7 @@
 package com.arianit.cityguidebe.controller;
 
 import com.arianit.cityguidebe.dto.BusTripDto;
+import com.arianit.cityguidebe.dto.BusTripDtoCustom;
 import com.arianit.cityguidebe.dto.request.BusTripRequest;
 import com.arianit.cityguidebe.dto.request.PageRequest;
 import com.arianit.cityguidebe.service.BusTripService;
@@ -29,11 +30,14 @@ public class BusTripController {
         return new ResponseEntity<>(busTripService.getAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/my-busTrips")
+    @GetMapping("/my-bustrips")
     public ResponseEntity<List<BusTripDto>> getMyBusTrips(){
         return new ResponseEntity<>(busTripService.getAllByNameOfCompany(), HttpStatus.OK);
     }
-
+    @GetMapping("/my-bustrips-with-reservations")
+    public ResponseEntity<List<BusTripDtoCustom>> getMyBusTripsWithReservation(){
+        return new ResponseEntity<>(busTripService.getAllWithReservation(), HttpStatus.OK);
+    }
     @GetMapping("/get")
     public ResponseEntity<List<BusTripDto>> getAll(
             @RequestParam String startLocation,

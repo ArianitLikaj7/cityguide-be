@@ -3,11 +3,13 @@ package com.arianit.cityguidebe.service;
 
 import com.arianit.cityguidebe.dao.BusTripRepository;
 import com.arianit.cityguidebe.dto.BusTripDto;
+import com.arianit.cityguidebe.dto.BusTripDtoCustom;
 import com.arianit.cityguidebe.dto.UserDto;
 import com.arianit.cityguidebe.dto.request.BusTripRequest;
 import com.arianit.cityguidebe.dto.request.PageRequest;
 import com.arianit.cityguidebe.entity.BusTrip;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
+import com.arianit.cityguidebe.mapper.BusTripDtoCustomMapper;
 import com.arianit.cityguidebe.mapper.BusTripMapper;
 import com.arianit.cityguidebe.util.ReflectionUtil;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ public class BusTripService {
     private final BusTripRepository busTripRepository;
     private final BusTripMapper mapper;
     private final UserService userService;
+    private final BusTripDtoCustomMapper customMapper;
 
     public BusTripDto create(BusTripRequest request){
         BusTrip busTrip = mapper.toEntity(request);
@@ -70,6 +73,14 @@ public class BusTripService {
         List<BusTrip> busTrips = busTripRepository.findByNameOfCompany(currentUser.getFirstName());
         return busTrips.stream()
                 .map(mapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<BusTripDtoCustom> getAllWithReservation() {
+        UserDto currentUser = userService.getCurrentUser();
+        List<BusTrip> busTrips =  busTripRepository.findByNameOfCompany(currentUser.getFirstName());
+        return busTrips.stream()
+                .map(customMapper::toDtoCustom)
                 .collect(Collectors.toList());
     }
 
