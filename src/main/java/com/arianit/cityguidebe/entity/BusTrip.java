@@ -1,11 +1,14 @@
 package com.arianit.cityguidebe.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Table(name = "bustrips")
 @Entity
@@ -16,7 +19,7 @@ import java.math.BigDecimal;
 @Builder
 public class BusTrip extends BaseEntity{
 
-    @Column(name = "name_of_company")
+    @Column(name = "name_of_company", unique = true)
     private String nameOfCompany;
 
     @Column(name = "start_station")
@@ -33,6 +36,10 @@ public class BusTrip extends BaseEntity{
 
     @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "busTrip")
+    @JsonManagedReference
+    private List<BusTripReservation> busTripReservations;
 
 
 

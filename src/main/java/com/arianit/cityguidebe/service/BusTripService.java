@@ -57,6 +57,8 @@ public class BusTripService {
                 mapper::toDto
         );
     }
+
+    //Permiresimi i logjikes kur i thu get ALL duhet te vijn te gjitha ne baze te usernmae te companise
     public List<BusTripDto> getAll() {
         List<BusTrip> busTrips = busTripRepository.findAll();
         return busTrips.stream()
