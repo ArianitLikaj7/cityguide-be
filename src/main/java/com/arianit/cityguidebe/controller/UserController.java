@@ -25,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getById(@PathVariable UUID id){
+    public ResponseEntity<UserDto> getById(@PathVariable Long id){
         return ResponseEntity.ok(userService.getById(id));
     }
 
@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> update(@PathVariable UUID id, @RequestBody Map<String, Object> fields) {
+    public ResponseEntity<UserDto> update(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
         return ResponseEntity.ok(userService.update(id,fields));
     }
 }

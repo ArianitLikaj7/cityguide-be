@@ -23,9 +23,7 @@ public class City extends BaseEntity {
     private String culturalHeritage;
 
     @Column(
-            nullable = false,
-            unique = true
-    )
+            nullable = false, unique = true)
     private String cityPrefix;
 
     @Column(name = "taxi_phone_number")

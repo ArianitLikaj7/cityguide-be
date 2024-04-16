@@ -35,9 +35,10 @@ public class UserService {
         return mapper.toDto(userInDb);
     }
 
-    public UserDto getById(UUID id){
+    public UserDto getById(Long id){
         User user = userRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException(String.format("User with id %s not found", id)));
+                () -> new ResourceNotFoundException(String.format("User with id %s not found", id))
+        );
         return mapper.toDto(user);
     }
 
@@ -55,7 +56,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public UserDto update(UUID id, Map<String, Object> fields){
+    public UserDto update(Long id, Map<String, Object> fields){
         User userInDb = userRepository.findById(id)
                 .orElseThrow( () -> new ResourceNotFoundException(String.format("User with id %s not found", id)));
         fields.forEach((key, value) ->{
