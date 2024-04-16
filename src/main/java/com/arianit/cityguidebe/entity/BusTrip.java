@@ -1,10 +1,7 @@
 package com.arianit.cityguidebe.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -34,8 +31,9 @@ public class BusTrip extends BaseEntity{
     @Column(name = "price",precision = 10, scale = 2)
     private BigDecimal price;
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "description",columnDefinition = "TEXT[]")
+    private String [] description;
+
 
     @OneToMany(mappedBy = "busTrip")
     @JsonManagedReference

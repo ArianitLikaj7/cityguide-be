@@ -17,5 +17,5 @@ public class BusTripDto {
     private String destination;
     private String startTime;
     private BigDecimal price;
-    private String description;
+    private String[] description;
 }

@@ -9,6 +9,6 @@ public record BusTripRequest(
         String destination,
         String startTime,
         BigDecimal price,
-        String description
+        String [] description
 ) {
 }
