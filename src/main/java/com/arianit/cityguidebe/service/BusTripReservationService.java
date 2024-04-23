@@ -69,7 +69,7 @@ public class BusTripReservationService {
 
     public void mapBusTripToBusTripReservation(BusTripReservationRequest req, BusTripReservation busTripReservation){
         BusTripDto busTripDto = busTripService.getById(req.busTripId());
-        busTripReservation.setBusTripId(busTripDto.getId());
+        busTripReservation.setBustripId(busTripDto.getId());
     }
 
 

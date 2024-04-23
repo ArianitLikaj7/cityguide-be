@@ -25,11 +25,11 @@ public class BusTripReservation extends BaseEntity{
     @Column(name = "username")
     private String username;
 
-    @Column(name = "bus_trip_id")
-    private Long busTripId;
+    @Column(name = "bustrip_id")
+    private Long bustripId;
 
     @ManyToOne
-    @JoinColumn(name = "bus_trip_id", insertable = false, updatable = false)
+    @JoinColumn(name = "bustrip_id", insertable = false, updatable = false)
     @JsonBackReference
     private BusTrip busTrip;
 }
