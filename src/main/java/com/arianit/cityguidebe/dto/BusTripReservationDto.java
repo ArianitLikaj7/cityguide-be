@@ -12,5 +12,6 @@ public class BusTripReservationDto {
     private String name;
     private String lastname;
     private String username;
-    private BusTripDto busTripDto;
+    private Long  bustripId;
+    private Integer telephone;
 }

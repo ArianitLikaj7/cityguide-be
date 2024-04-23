@@ -22,7 +22,6 @@ import java.util.Map;
 public class BusTripReservationController {
 
     private final BusTripReservationService busTripReservationService;
-    private final UserService userService;
 
     @PostMapping
     public ResponseEntity<BusTripReservationDto> createBusTripReservation(@RequestBody BusTripReservationRequest request) {
