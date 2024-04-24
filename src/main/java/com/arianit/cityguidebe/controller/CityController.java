@@ -65,8 +65,4 @@ public class CityController {
     }
 
 
-    @GetMapping("/state/{stateId}")
-    public List<CityDto> getCitiesByStateId(@PathVariable Long stateId) {
-        return cityService.getCitiesByStateId(stateId);
-    }
 }

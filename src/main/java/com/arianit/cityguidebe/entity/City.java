@@ -33,11 +33,6 @@ public class City extends BaseEntity {
     @JsonManagedReference
     private List<Gastronome> gastronomes;
 
-    @ManyToOne
-    @JoinColumn(name = "state_id", insertable = false, updatable = false)
-    @JsonBackReference
-    private State state;
-
     @Column(name = "state_id")
     private Long stateId;
 

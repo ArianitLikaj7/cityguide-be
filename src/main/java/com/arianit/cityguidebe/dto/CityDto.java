@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 public class CityDto extends BaseDto {
     private String nameOfCity;
-    private Long stateId;
     private String culturalHeritage;
     private String cityPrefix;
     private String taxiPhoneNumber;
