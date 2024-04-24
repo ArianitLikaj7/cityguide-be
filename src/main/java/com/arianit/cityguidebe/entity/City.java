@@ -26,15 +26,13 @@ public class City extends BaseEntity {
             nullable = false, unique = true)
     private String cityPrefix;
 
-    @Column(name = "taxi_phone_number")
-    private String taxiPhoneNumber;
+    @Column(name = "taxi_phone_numbers")
+    private String [] taxiPhoneNumber;
 
     @OneToMany(mappedBy = "city")
     @JsonManagedReference
     private List<Gastronome> gastronomes;
 
-    @Column(name = "state_id")
-    private Long stateId;
 
 
 

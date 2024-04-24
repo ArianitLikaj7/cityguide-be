@@ -13,7 +13,7 @@ public class CityDto extends BaseDto {
     private String nameOfCity;
     private String culturalHeritage;
     private String cityPrefix;
-    private String taxiPhoneNumber;
+    private String [] taxiPhoneNumber;
     @JsonManagedReference
     private List<GastronomeDto> gastronomeDtos;
 }
