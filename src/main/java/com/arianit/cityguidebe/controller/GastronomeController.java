@@ -18,6 +18,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/gastronomes")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class GastronomeController {
 
     private final GastronomeService gastronomeService;
