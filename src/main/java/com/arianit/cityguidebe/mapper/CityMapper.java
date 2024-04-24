@@ -3,6 +3,7 @@ package com.arianit.cityguidebe.mapper;
 import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.request.CityRequest;
+import com.arianit.cityguidebe.dto.request.UpdateCityRequest;
 import com.arianit.cityguidebe.entity.City;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class CityMapper implements GenericMapper<City, CityDto, CityRequest> {
+public class CityMapper implements UpdateGenericMapper<City, CityDto, CityRequest, UpdateCityRequest> {
 
     private final ModelMapper modelMapper;
 
@@ -32,5 +33,10 @@ public class CityMapper implements GenericMapper<City, CityDto, CityRequest> {
     @Override
     public City toEntity(CityRequest request) {
         return modelMapper.map(request, City.class);
+    }
+
+    @Override
+    public void toEntity(UpdateCityRequest updateRequest, City entity) {
+        modelMapper.map(updateRequest,entity);
     }
 }
