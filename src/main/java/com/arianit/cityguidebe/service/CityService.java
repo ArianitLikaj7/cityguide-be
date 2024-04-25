@@ -4,7 +4,9 @@ import com.arianit.cityguidebe.dao.CityRepository;
 import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.request.CityRequest;
 import com.arianit.cityguidebe.dto.request.PageRequest;
+import com.arianit.cityguidebe.dto.request.UpdateCityRequest;
 import com.arianit.cityguidebe.entity.City;
+import com.arianit.cityguidebe.exception.MismatchedInputException;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.CityMapper;
 import com.arianit.cityguidebe.util.ReflectionUtil;
@@ -59,6 +61,7 @@ public class CityService {
         });
         return cityMapper.toDto(cityRepository.save(cityInDb));
     }
+
 
     public CityDto findCitiesByCityPrefix(String cityPrefix) {
         City city = cityRepository.findCitiesByCityPrefix(cityPrefix);
