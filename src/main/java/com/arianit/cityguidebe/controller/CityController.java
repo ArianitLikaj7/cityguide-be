@@ -19,7 +19,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/cities")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+
 public class CityController {
 
     private final CityService cityService;
