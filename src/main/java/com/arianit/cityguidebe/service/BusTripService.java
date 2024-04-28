@@ -13,6 +13,7 @@ import com.arianit.cityguidebe.exception.MismatchedInputException;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.BusTripDtoCustomMapper;
 import com.arianit.cityguidebe.mapper.BusTripMapper;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class BusTripService {
     private final UserService userService;
     private final BusTripDtoCustomMapper customMapper;
 
+    @Transactional
     public BusTripDto create(BusTripRequest request){
         BusTrip busTrip = busTripMapper.toEntity(request);
         UserDto currentUser = userService.getCurrentUser();

@@ -5,8 +5,10 @@ import com.arianit.cityguidebe.dto.UserDto;
 import com.arianit.cityguidebe.dto.request.UserRequest;
 import com.arianit.cityguidebe.entity.User;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
+import com.arianit.cityguidebe.exception.UserAlreadyExists;
 import com.arianit.cityguidebe.mapper.UserMapper;
 import com.arianit.cityguidebe.util.ReflectionUtil;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -28,7 +30,12 @@ public class UserService {
     private final UserMapper mapper;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public UserDto create(UserRequest request){
+        if(userRepository.existsByUsername(request.username())){
+            throw new UserAlreadyExists(String.format(
+                    "User with this %s - username already exist",request.username()));
+        }
         User user = mapper.toEntity(request);
         setUserPasswordAndRole(request, user);
         User userInDb = userRepository.save(user);

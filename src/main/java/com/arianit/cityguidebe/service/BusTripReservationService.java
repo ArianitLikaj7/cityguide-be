@@ -16,6 +16,7 @@ import com.arianit.cityguidebe.mapper.BusTripReservationMapper;
 import com.arianit.cityguidebe.util.ReflectionUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ public class BusTripReservationService {
     private final BusTripReservationMapper busTripReservationMapper;
     private final BusTripService busTripService;
 
+    @Transactional
     public BusTripReservationDto create (BusTripReservationRequest request){
         BusTripReservation busTripReservation = busTripReservationMapper.toEntity(request);
         mapBusTripToBusTripReservation(request, busTripReservation);
@@ -61,16 +63,6 @@ public class BusTripReservationService {
         busTripReservationRepository.deleteById(id);
     }
 
-//    public  BusTripReservationDto update(Long id, Map<String, Object> fields) {
-//         BusTripReservation busTripReservationInDb = busTripReservationRepository
-//                .findById(id).orElseThrow(()-> new ResourceNotFoundException(
-//                        String.format("BusTripReservation with id %s not found", id)
-//                ));
-//        fields.forEach((key, value) ->{
-//            ReflectionUtil.setFieldValue(busTripReservationInDb, key, value);
-//        });
-//        return busTripReservationMapper.toDto(busTripReservationRepository.save(busTripReservationInDb));
-//    }
 
     public BusTripReservationDto update(Long id, UpdateBusTripReservationRequest request){
         if (!(id.equals(request.id()))){
