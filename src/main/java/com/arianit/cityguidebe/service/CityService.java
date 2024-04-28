@@ -51,15 +51,27 @@ public class CityService {
         );
     }
 
-    public CityDto update(Long id, Map<String, Object> fields) {
-        City cityInDb = cityRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        String.format("city with %s not found", id)
-                ));
-        fields.forEach((key, value) ->{
-            ReflectionUtil.setFieldValue(cityInDb, key, value);
-        });
-        return cityMapper.toDto(cityRepository.save(cityInDb));
+//    public CityDto update(Long id, Map<String, Object> fields) {
+//        City cityInDb = cityRepository.findById(id)
+//                .orElseThrow(() -> new ResourceNotFoundException(
+//                        String.format("city with %s not found", id)
+//                ));
+//        fields.forEach((key, value) ->{
+//            ReflectionUtil.setFieldValue(cityInDb, key, value);
+//        });
+//        return cityMapper.toDto(cityRepository.save(cityInDb));
+//    }
+
+    public CityDto update (Long id, UpdateCityRequest request){
+        if(!id.equals(request.id())){
+            throw new MismatchedInputException("Ids dosent matchs");
+        }
+        City cityIndDb = cityRepository.findById(id).orElseThrow(()->
+                new ResourceNotFoundException(String.format("City with %s id not found",id))
+        );
+        cityMapper.toEntity(request,cityIndDb);
+        return cityMapper.toDto(cityRepository.save(cityIndDb));
+
     }
 
 

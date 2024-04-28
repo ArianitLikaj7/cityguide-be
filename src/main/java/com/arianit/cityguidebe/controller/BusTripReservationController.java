@@ -3,6 +3,7 @@ package com.arianit.cityguidebe.controller;
 import com.arianit.cityguidebe.dto.BusTripReservationDto;
 import com.arianit.cityguidebe.dto.UserDto;
 import com.arianit.cityguidebe.dto.request.BusTripReservationRequest;
+import com.arianit.cityguidebe.dto.request.UpdateBusTripReservationRequest;
 import com.arianit.cityguidebe.entity.BusTripReservation;
 import com.arianit.cityguidebe.service.BusTripReservationService;
 import com.arianit.cityguidebe.service.UserService;
@@ -48,8 +49,9 @@ public class BusTripReservationController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<BusTripReservationDto> updateBusTripReservation(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
-        BusTripReservationDto updatedReservation = busTripReservationService.update(id, fields);
+    public ResponseEntity<BusTripReservationDto> updateBusTripReservation(
+            @PathVariable Long id, @RequestBody UpdateBusTripReservationRequest request) {
+        BusTripReservationDto updatedReservation = busTripReservationService.update(id, request);
         return new ResponseEntity<>(updatedReservation, HttpStatus.OK);
     }
 

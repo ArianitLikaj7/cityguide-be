@@ -6,8 +6,10 @@ import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.request.GastronomeRequest;
 import com.arianit.cityguidebe.dto.request.PageRequest;
+import com.arianit.cityguidebe.dto.request.UpdateGastronomeRequest;
 import com.arianit.cityguidebe.entity.City;
 import com.arianit.cityguidebe.entity.Gastronome;
+import com.arianit.cityguidebe.exception.MismatchedInputException;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.GastronomeMapper;
 import com.arianit.cityguidebe.util.ReflectionUtil;
@@ -69,16 +71,20 @@ public class GastronomeService {
         gastronomeRepository.deleteById(id);
     }
 
-    public GastronomeDto update(Long id, Map<String, Object> fields) {
-        Gastronome gastronomeInDb = gastronomeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        String.format("city with %s not found", id)
-                ));
-        fields.forEach((key, value) ->{
-            ReflectionUtil.setFieldValue(gastronomeInDb, key, value);
-        });
+    public GastronomeDto update(Long id, UpdateGastronomeRequest request){
+        if (!(id.equals(request.id()))){
+            throw new MismatchedInputException("Ids dosent match");
+        }
+
+        Gastronome gastronomeInDb = gastronomeRepository.findById(id).orElseThrow(()->
+                new ResourceNotFoundException(
+                        String.format("Gastronmoe with %s id not found", id)));
+
+        gastronomeMapper.toEntity(request,gastronomeInDb);
+        mapCityToUpdateGastronome(request,gastronomeInDb);
         return gastronomeMapper.toDto(gastronomeRepository.save(gastronomeInDb));
     }
+
     public List<GastronomeDto> getGastronomesByCityId(Long cityId){
         List<Gastronome> gastronomes = gastronomeRepository.findByCityId(cityId);
         return gastronomes.stream()
@@ -100,4 +106,10 @@ public class GastronomeService {
         gastronome.setCityId(city.getId());
     }
 
+    private void mapCityToUpdateGastronome(UpdateGastronomeRequest request, Gastronome gastronome) {
+        if(request.cityId() != null){
+        CityDto city = cityService.getById(request.cityId());
+        gastronome.setCityId(city.getId());
+        }
+    }
 }

@@ -7,17 +7,17 @@ import com.arianit.cityguidebe.dto.BusTripDtoCustom;
 import com.arianit.cityguidebe.dto.UserDto;
 import com.arianit.cityguidebe.dto.request.BusTripRequest;
 import com.arianit.cityguidebe.dto.request.PageRequest;
+import com.arianit.cityguidebe.dto.request.UpdateBusTripRequest;
 import com.arianit.cityguidebe.entity.BusTrip;
+import com.arianit.cityguidebe.exception.MismatchedInputException;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.BusTripDtoCustomMapper;
 import com.arianit.cityguidebe.mapper.BusTripMapper;
-import com.arianit.cityguidebe.util.ReflectionUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,15 +25,15 @@ import java.util.stream.Collectors;
 public class BusTripService {
 
     private final BusTripRepository busTripRepository;
-    private final BusTripMapper mapper;
+    private final BusTripMapper busTripMapper;
     private final UserService userService;
     private final BusTripDtoCustomMapper customMapper;
 
     public BusTripDto create(BusTripRequest request){
-        BusTrip busTrip = mapper.toEntity(request);
+        BusTrip busTrip = busTripMapper.toEntity(request);
         UserDto currentUser = userService.getCurrentUser();
         busTrip.setNameOfCompany(currentUser.getFirstName());
-        return mapper.toDto(busTripRepository.save(busTrip));
+        return busTripMapper.toDto(busTripRepository.save(busTrip));
     }
 
     public BusTripDto getById(Long id){
@@ -42,13 +42,13 @@ public class BusTripService {
                         "Bus Trip with id %s not found",id
                 ))
         );
-        return mapper.toDto(busTripInDb);
+        return busTripMapper.toDto(busTripInDb);
     }
 
     public List<BusTripDto> getByStartStationAndDestination(String startStatiton, String destination){
         List<BusTrip> busTrips = busTripRepository.findByStartStationAndDestination(startStatiton,destination);
         return busTrips.stream()
-                .map(mapper::toDto)
+                .map(busTripMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -57,14 +57,14 @@ public class BusTripService {
         Page<BusTrip> allBusTrips = busTripRepository.findByStartStationAndDestination(
                 startStatiton,destination,pageRequest.getPageable());
         return allBusTrips.map(
-                mapper::toDto
+                busTripMapper::toDto
         );
     }
 
     public List<BusTripDto> getAll() {
         List<BusTrip> busTrips = busTripRepository.findAll();
         return busTrips.stream()
-                .map(mapper::toDto)
+                .map(busTripMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -72,7 +72,7 @@ public class BusTripService {
         UserDto currentUser = userService.getCurrentUser();
         List<BusTrip> busTrips = busTripRepository.findByNameOfCompany(currentUser.getFirstName());
         return busTrips.stream()
-                .map(mapper::toDto)
+                .map(busTripMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -85,16 +85,16 @@ public class BusTripService {
     }
 
 
-    public BusTripDto update(Long id, Map<String, Object> fields) {
-        BusTrip busTripInDb = busTripRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        String.format("BusTrip with id %s not found", id)
-                ));
-        fields.forEach((key, value) ->{
-            ReflectionUtil.setFieldValue(busTripInDb, key, value);
-        });
+    public BusTripDto update (Long id, UpdateBusTripRequest request){
+        if(!id.equals(request.id())){
+            throw new MismatchedInputException("Ids dosent matchs");
+        }
+        BusTrip busTripInDb = busTripRepository.findById(id).orElseThrow(()->
+                new ResourceNotFoundException(String.format("BusTrip with %s id not found",id))
+        );
+        busTripMapper.toEntity(request,busTripInDb);
+        return busTripMapper.toDto(busTripRepository.save(busTripInDb));
 
-        return mapper.toDto(busTripInDb);
     }
 
     public void delete(Long id) {

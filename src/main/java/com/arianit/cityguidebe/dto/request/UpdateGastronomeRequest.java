@@ -7,7 +7,7 @@ import java.util.List;
 
 public record UpdateGastronomeRequest(
         @NotNull Long id,
-        @NotNull Long cityId,
+        Long cityId,
         String nameOfGastronome,
         String schedule,
         @NotNull Double longitude,

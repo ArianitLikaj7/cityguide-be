@@ -1,9 +1,9 @@
 package com.arianit.cityguidebe.controller;
 
-import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.ReservationDto;
 import com.arianit.cityguidebe.dto.request.PageRequest;
 import com.arianit.cityguidebe.dto.request.ReservationRequest;
+import com.arianit.cityguidebe.dto.request.UpdateReservationRequest;
 import com.arianit.cityguidebe.service.ReservationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +41,14 @@ public class ReservationController {
         return ResponseEntity.ok(reservationDtoList);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ReservationDto> update(
+            @PathVariable Long id,
+            @RequestBody UpdateReservationRequest request
+            ){
+        ReservationDto reservationDto = reservationService.update(id,request);
+        return new  ResponseEntity<>(reservationDto,HttpStatus.OK);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
         reservationService.delete(id);

@@ -4,9 +4,12 @@ import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.request.GastronomeRequest;
 import com.arianit.cityguidebe.dto.request.PageRequest;
+import com.arianit.cityguidebe.dto.request.UpdateCityRequest;
+import com.arianit.cityguidebe.dto.request.UpdateGastronomeRequest;
 import com.arianit.cityguidebe.entity.TypeOfGastronome;
 import com.arianit.cityguidebe.service.GastronomeService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,8 +68,8 @@ public class GastronomeController {
     @PutMapping("/{id}")
     public ResponseEntity<GastronomeDto> update(
             @PathVariable Long id,
-            @RequestBody Map<String,Object> fields) {
-        GastronomeDto updatedGastronome = gastronomeService.update(id, fields);
+            @RequestBody UpdateGastronomeRequest request) {
+        GastronomeDto updatedGastronome = gastronomeService.update(id, request);
         return new ResponseEntity<>(updatedGastronome, HttpStatus.OK);
     }
 

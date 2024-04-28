@@ -3,9 +3,14 @@ package com.arianit.cityguidebe.service;
 import com.arianit.cityguidebe.dao.BusTripReservationRepository;
 import com.arianit.cityguidebe.dto.BusTripDto;
 import com.arianit.cityguidebe.dto.BusTripReservationDto;
+import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.UserDto;
 import com.arianit.cityguidebe.dto.request.BusTripReservationRequest;
+import com.arianit.cityguidebe.dto.request.UpdateBusTripReservationRequest;
+import com.arianit.cityguidebe.dto.request.UpdateGastronomeRequest;
 import com.arianit.cityguidebe.entity.BusTripReservation;
+import com.arianit.cityguidebe.entity.Gastronome;
+import com.arianit.cityguidebe.exception.MismatchedInputException;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.BusTripReservationMapper;
 import com.arianit.cityguidebe.util.ReflectionUtil;
@@ -56,22 +61,29 @@ public class BusTripReservationService {
         busTripReservationRepository.deleteById(id);
     }
 
-    public  BusTripReservationDto update(Long id, Map<String, Object> fields) {
-         BusTripReservation busTripReservationInDb = busTripReservationRepository
-                .findById(id).orElseThrow(()-> new ResourceNotFoundException(
-                        String.format("BusTripReservation with id %s not found", id)
-                ));
-        fields.forEach((key, value) ->{
-            ReflectionUtil.setFieldValue(busTripReservationInDb, key, value);
-        });
+//    public  BusTripReservationDto update(Long id, Map<String, Object> fields) {
+//         BusTripReservation busTripReservationInDb = busTripReservationRepository
+//                .findById(id).orElseThrow(()-> new ResourceNotFoundException(
+//                        String.format("BusTripReservation with id %s not found", id)
+//                ));
+//        fields.forEach((key, value) ->{
+//            ReflectionUtil.setFieldValue(busTripReservationInDb, key, value);
+//        });
+//        return busTripReservationMapper.toDto(busTripReservationRepository.save(busTripReservationInDb));
+//    }
+
+    public BusTripReservationDto update(Long id, UpdateBusTripReservationRequest request){
+        if (!(id.equals(request.id()))){
+            throw new MismatchedInputException("Ids dosent match");
+        }
+        BusTripReservation busTripReservationInDb = busTripReservationRepository.findById(id).orElseThrow(()->
+                new ResourceNotFoundException(
+                        String.format("Gastronmoe with %s id not found", id)));
+
+        busTripReservationMapper.toEntity(request,busTripReservationInDb);
+        mapBusTripToUpdateBusTripReservation(request,busTripReservationInDb);
         return busTripReservationMapper.toDto(busTripReservationRepository.save(busTripReservationInDb));
     }
-
-    public void mapBusTripToBusTripReservation(BusTripReservationRequest req, BusTripReservation busTripReservation){
-        BusTripDto busTripDto = busTripService.getById(req.busTripId());
-        busTripReservation.setBustripId(busTripDto.getId());
-    }
-
 
 
     public List<BusTripReservationDto> findBusTripReservationByUsername() {
@@ -81,5 +93,17 @@ public class BusTripReservationService {
         return busTripReservations.stream()
                 .map(busTripReservationMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public void mapBusTripToBusTripReservation(BusTripReservationRequest req, BusTripReservation busTripReservation){
+        BusTripDto busTripDto = busTripService.getById(req.busTripId());
+        busTripReservation.setBustripId(busTripDto.getId());
+    }
+
+    public void mapBusTripToUpdateBusTripReservation(UpdateBusTripReservationRequest req, BusTripReservation busTripReservation){
+        if(req.busTripId() != null){
+        BusTripDto busTripDto = busTripService.getById(req.busTripId());
+        busTripReservation.setBustripId(busTripDto.getId());
+        }
     }
 }

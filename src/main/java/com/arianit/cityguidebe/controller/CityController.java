@@ -3,8 +3,10 @@ package com.arianit.cityguidebe.controller;
 import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.request.CityRequest;
 import com.arianit.cityguidebe.dto.request.PageRequest;
+import com.arianit.cityguidebe.dto.request.UpdateCityRequest;
 import com.arianit.cityguidebe.service.CityService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -50,15 +52,12 @@ public class CityController {
         return cityService.findCitiesByCityPrefix(prefix);
     }
 
-
     @PutMapping("/{id}")
     public ResponseEntity<CityDto> update(
-            @PathVariable Long id,
-            @RequestBody Map<String,Object> fields) {
-        CityDto updatedCity = cityService.update(id, fields);
-        return new ResponseEntity<>(updatedCity, HttpStatus.OK);
+            @PathVariable("id") Long cityId,
+            @RequestBody @Valid @NotNull UpdateCityRequest updateRequest) {
+        return new ResponseEntity<>(cityService.update(cityId, updateRequest), HttpStatus.OK);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         cityService.delete(id);

@@ -8,8 +8,10 @@ import com.arianit.cityguidebe.dto.ReservationDto;
 import com.arianit.cityguidebe.dto.request.GastronomeRequest;
 import com.arianit.cityguidebe.dto.request.PageRequest;
 import com.arianit.cityguidebe.dto.request.ReservationRequest;
+import com.arianit.cityguidebe.dto.request.UpdateReservationRequest;
 import com.arianit.cityguidebe.entity.Gastronome;
 import com.arianit.cityguidebe.entity.Reservation;
+import com.arianit.cityguidebe.exception.MismatchedInputException;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.ReservationMapper;
 import jakarta.validation.Valid;
@@ -51,11 +53,24 @@ public class ReservationService {
                 reservationMapper::toDto
         );
     }
+
     public List<ReservationDto> getAll(){
         List<Reservation> reservations = reservationRepository.findAll();
         return reservations.stream()
                 .map(reservationMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public ReservationDto update (Long id, UpdateReservationRequest request){
+        if (!(id.equals(request.id()))){
+            throw new MismatchedInputException("Ids dosent match");
+        }
+        Reservation reservationInDb = reservationRepository.findById(id).orElseThrow(()->
+                new ResourceNotFoundException(
+                        String.format("Reservation with %s id not found", id)));
+        reservationMapper.toEntity(request,reservationInDb);
+        mapReservationToUpdateGastronome(request,reservationInDb);
+        return reservationMapper.toDto(reservationRepository.save(reservationInDb));
     }
 
     public void delete(Long id){
@@ -65,8 +80,16 @@ public class ReservationService {
                 ));
         reservationRepository.deleteById(id);
     }
+
     public void mapReservationToGastronome(ReservationRequest reservationRequest, Reservation reservation){
         GastronomeDto gastronomeDto = gastronomeService.getById(reservationRequest.gastronomeId());
         reservation.setGastronomeId(gastronomeDto.getId());
+    }
+
+    public void mapReservationToUpdateGastronome(UpdateReservationRequest request, Reservation reservation){
+        if(request.gastronomeId() != null){
+        GastronomeDto gastronomeDto = gastronomeService.getById(request.gastronomeId());
+        reservation.setGastronomeId(gastronomeDto.getId());
+        }
     }
 }

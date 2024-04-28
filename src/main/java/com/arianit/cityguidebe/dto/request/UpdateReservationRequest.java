@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record UpdateReservationRequest(
         @NotNull Long id,
-        @NotBlank Long gastronomeId,
+        Long gastronomeId,
         String reservationDate,
         Integer numberOfPeople,
         String specialRequests,

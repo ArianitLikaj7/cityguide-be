@@ -4,6 +4,7 @@ import com.arianit.cityguidebe.dto.BusTripDto;
 import com.arianit.cityguidebe.dto.BusTripDtoCustom;
 import com.arianit.cityguidebe.dto.request.BusTripRequest;
 import com.arianit.cityguidebe.dto.request.PageRequest;
+import com.arianit.cityguidebe.dto.request.UpdateBusTripRequest;
 import com.arianit.cityguidebe.service.BusTripService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,10 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@RequestMapping("bustrips")
+@RequestMapping("/bustrips")
 @RequiredArgsConstructor
 public class BusTripController {
     private final BusTripService busTripService;
@@ -62,8 +62,8 @@ public class BusTripController {
     @PutMapping("/{id}")
     public ResponseEntity<BusTripDto> update(
             @PathVariable Long id,
-            @RequestBody Map<String,Object> fields) {
-        BusTripDto updatedBusTrip = busTripService.update(id, fields);
+            @RequestBody UpdateBusTripRequest request) {
+        BusTripDto updatedBusTrip = busTripService.update(id, request);
         return new ResponseEntity<>(updatedBusTrip, HttpStatus.OK);
     }
 }
