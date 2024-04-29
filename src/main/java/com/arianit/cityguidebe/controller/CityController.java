@@ -54,9 +54,9 @@ public class CityController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CityDto> update(
-            @PathVariable("id") Long cityId,
+            @PathVariable Long id,
             @RequestBody @Valid @NotNull UpdateCityRequest updateRequest) {
-        return new ResponseEntity<>(cityService.update(cityId, updateRequest), HttpStatus.OK);
+        return new ResponseEntity<>(cityService.update(id, updateRequest), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
