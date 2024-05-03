@@ -1,6 +1,7 @@
 package com.arianit.cityguidebe.service;
 
 import com.arianit.cityguidebe.dao.UserRepository;
+import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.UserDto;
 import com.arianit.cityguidebe.dto.request.UserRequest;
 import com.arianit.cityguidebe.entity.User;
@@ -29,6 +30,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper mapper;
     private final PasswordEncoder passwordEncoder;
+    private final FavoriteService favoriteService;
 
     @Transactional
     public UserDto create(UserRequest request){
@@ -61,6 +63,9 @@ public class UserService {
         return users.stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
+    }
+    public List<GastronomeDto> getUserFavoriteGastronomies(String username) {
+        return favoriteService.getUserFavoriteGastronomies(username);
     }
 
     public UserDto update(Long id, Map<String, Object> fields){

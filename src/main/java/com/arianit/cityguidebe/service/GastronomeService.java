@@ -57,6 +57,14 @@ public class GastronomeService {
                 .map(gastronomeMapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    public List<GastronomeDto> getAllByIds(List<Long> ids){
+        List<Gastronome> gastronomesByIds = gastronomeRepository.findAllById(ids);
+        return gastronomesByIds.stream()
+                .map(gastronomeMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     public Page<GastronomeDto> getAllPagable(@Valid PageRequest pageRequest){
         return gastronomeRepository.findAll(pageRequest.getPageable()).map(
                 gastronomeMapper::toDto

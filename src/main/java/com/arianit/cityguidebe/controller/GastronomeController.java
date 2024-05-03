@@ -59,6 +59,11 @@ public class GastronomeController {
         return ResponseEntity.ok(gastronomeDtos);
     }
 
+    @GetMapping
+    public List<GastronomeDto> getAllByIds(@RequestParam List<Long> ids) {
+        return gastronomeService.getAllByIds(ids);
+    }
+
 
     @GetMapping("/byCityId/{cityId}")
     public ResponseEntity<List<GastronomeDto>> getGastronomesByCityId(@PathVariable long cityId) {

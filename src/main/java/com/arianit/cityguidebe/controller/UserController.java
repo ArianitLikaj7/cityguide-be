@@ -1,11 +1,14 @@
 package com.arianit.cityguidebe.controller;
 
+import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.UserDto;
 import com.arianit.cityguidebe.dto.request.UserRequest;
 import com.arianit.cityguidebe.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,5 +40,12 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> update(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
         return ResponseEntity.ok(userService.update(id,fields));
+    }
+
+    @GetMapping("/favorites")
+    public List<GastronomeDto> getUserFavoriteGastronomies() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return userService.getUserFavoriteGastronomies(username);
     }
 }
