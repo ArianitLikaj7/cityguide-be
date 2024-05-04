@@ -9,6 +9,7 @@ import com.arianit.cityguidebe.dto.request.PageRequest;
 import com.arianit.cityguidebe.dto.request.UpdateGastronomeRequest;
 import com.arianit.cityguidebe.entity.City;
 import com.arianit.cityguidebe.entity.Gastronome;
+import com.arianit.cityguidebe.entity.TypeOfGastronome;
 import com.arianit.cityguidebe.exception.MismatchedInputException;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.GastronomeMapper;
@@ -100,6 +101,15 @@ public class GastronomeService {
                 .collect(toList());
     }
 
+    public List<GastronomeDto> getGastronomesByCityIdAndTypes(Long cityId, List<TypeOfGastronome> types) {
+        List<Gastronome> gastronomes = gastronomeRepository.findAll().stream()
+                .filter(gastronome -> gastronome.getCityId().equals(cityId) && types.contains(gastronome.getTypeOfGastronome()))
+                .sorted(Comparator.comparing(Gastronome::isSponsored).reversed())
+                .collect(Collectors.toList());
+        return gastronomes.stream()
+                .map(gastronomeMapper::toDto)
+                .collect(Collectors.toList());
+    }
     public List<GastronomeDto> getTheMostVisitedGastronomes() {
         List<Gastronome> gastronomes = gastronomeRepository.findAll();
         Set<GastronomeDto> sponsoredGastronomesSet = new HashSet<>(gastronomes.stream()

@@ -36,6 +36,13 @@ public class GastronomeController {
         return new ResponseEntity<>(createdGastronome, HttpStatus.CREATED);
     }
 
+    @GetMapping("/gastronomes/filter")
+    public List<GastronomeDto> getGastronomesByCityIdAndTypes(
+            @RequestParam Long cityId,
+            @RequestParam List<TypeOfGastronome> types) {
+        return gastronomeService.getGastronomesByCityIdAndTypes(cityId, types);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<GastronomeDto> getGastronomeById(@PathVariable Long id) {
         GastronomeDto gastronomeDto = gastronomeService.getById(id);
