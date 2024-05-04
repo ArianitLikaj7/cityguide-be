@@ -41,6 +41,7 @@ public class FavoriteService {
         String username = authentication.getName();
         favorite.setNameOfUser(username);
         mapGastronomeToFavorite(request,favorite);
+        // TODO check if in databae then save
         return mapper.toDto(favoriteRepository.save(favorite));
     }
 
