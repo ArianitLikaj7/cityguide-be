@@ -1,6 +1,7 @@
 package com.arianit.cityguidebe.dto;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.*;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonPropertyOrder({"day", "id", "nameOfCity", "culturalHeritage", "cityPrefix", "taxiPhoneNumber", "gastronomeDtos"})
 public class CityDto extends BaseDto {
     private String nameOfCity;
     private String culturalHeritage;
@@ -16,4 +18,5 @@ public class CityDto extends BaseDto {
     private String [] taxiPhoneNumber;
     @JsonManagedReference
     private List<GastronomeDto> gastronomeDtos;
+    private int day;
 }

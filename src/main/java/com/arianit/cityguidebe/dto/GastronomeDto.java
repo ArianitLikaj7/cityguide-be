@@ -21,5 +21,4 @@ public class GastronomeDto extends BaseDto {
     private String description;
     private Double price;
     private String phoneNumber;
-    private Integer day;
 }

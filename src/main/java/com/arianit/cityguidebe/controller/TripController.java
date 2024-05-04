@@ -20,10 +20,9 @@ public class TripController {
 
     private final TripService tripService;
 
-
     @PostMapping
     public ResponseEntity<TripDto> createAdvanceTrip(@RequestBody TripRequest tripRequest) {
-        TripDto citiesWithGastronomies = tripService.createAdvanceTrip1(
+        TripDto citiesWithGastronomies = tripService.create(
                 tripRequest.getCityIds(), tripRequest.getTypeOfGastronomes(), tripRequest.getNumOfDays());
         return new ResponseEntity<>(citiesWithGastronomies, HttpStatus.OK);
     }
@@ -32,23 +31,16 @@ public class TripController {
         List<Long> cityIds = tripRequest.getCityIds();
         List<TypeOfGastronome> gastronomyTypes = tripRequest.getTypeOfGastronomes();
         int numOfDays = tripRequest.getNumOfDays();
-        TripDto tripDto = tripService.generateAdvanceTrip2(cityIds, gastronomyTypes, numOfDays);
+        TripDto tripDto = tripService.generate(cityIds, gastronomyTypes, numOfDays);
         return new ResponseEntity<>(tripDto, HttpStatus.OK);
     }
 
-    @GetMapping("/getTrips")
+    @GetMapping
     public ResponseEntity<List<TripDto>> getAllTrips() {
         List<TripDto> trips = tripService.getAllTrips();
         return new ResponseEntity<>(trips, HttpStatus.OK);
     }
-
-    @GetMapping("/getTrip/{tripId}")
-    public ResponseEntity<TripDto> getTripById(@PathVariable Long tripId) {
-        TripDto trip = tripService.getTripById(tripId);
-        return new ResponseEntity<>(trip, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/deleteTrip/{tripId}")
+    @DeleteMapping("/{tripId}")
     public ResponseEntity<String> deleteTrip(@PathVariable Long tripId) {
         tripService.deleteTrip(tripId);
         return new ResponseEntity<>("Trip deleted successfully", HttpStatus.OK);

@@ -15,5 +15,5 @@ public class TripDto {
     private int numOfDays;
     private List<Long> cityIds;
     private List<TypeOfGastronome> typesOfGastronome;
-    private List<CityDto> cityDtos;
+    private List<List<CityDto>> cityDtosPerDay;
 }
