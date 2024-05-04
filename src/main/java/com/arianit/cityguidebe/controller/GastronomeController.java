@@ -36,7 +36,7 @@ public class GastronomeController {
         return new ResponseEntity<>(createdGastronome, HttpStatus.CREATED);
     }
 
-    @GetMapping("/gastronomes/filter")
+    @GetMapping("/filter")
     public List<GastronomeDto> getGastronomesByCityIdAndTypes(
             @RequestParam Long cityId,
             @RequestParam List<TypeOfGastronome> types) {
