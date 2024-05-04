@@ -43,7 +43,9 @@ public class UserService {
         User userInDb = userRepository.save(user);
         return mapper.toDto(userInDb);
     }
-
+    public List<Long> getUserFavoriteGastronomeIds(String username) {
+        return favoriteService.findGastronomeIdByNameOfUser(username);
+    }
     public UserDto getById(Long id){
         User user = userRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException(String.format("User with id %s not found", id))
@@ -55,7 +57,10 @@ public class UserService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User loggedUser = (User) authentication.getPrincipal();
 
-        return mapper.toDto(loggedUser);
+        UserDto userDto =  mapper.toDto(loggedUser);
+        List<Long> favoriteGastronomeIds = favoriteService.findGastronomeIdByNameOfUser(loggedUser.getUsername());
+        userDto.setFavoriteGastronomeIds(favoriteGastronomeIds);
+        return userDto;
     }
 
     public List<UserDto> getAll(){

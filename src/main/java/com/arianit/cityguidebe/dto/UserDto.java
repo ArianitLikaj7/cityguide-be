@@ -4,6 +4,7 @@ import com.arianit.cityguidebe.entity.Role;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,4 +20,6 @@ public class UserDto {
     private String lastName;
     private String username;
     private Role role;
+    private List<Long> favoriteGastronomeIds;
+
 }

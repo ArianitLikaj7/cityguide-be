@@ -1,12 +1,19 @@
 package com.arianit.cityguidebe.dto;
 
-import lombok.Builder;
+import lombok.*;
 
+import java.util.List;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public record CurrentLoggedInUserDto(
-        Long userId,
-        String firstName,
-        String lastName,
-        String email,
-        String role) {
+public class CurrentLoggedInUserDto{
+        private Long userId;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String role;
+        private List<Long> favoriteGastronomeIds;
 }

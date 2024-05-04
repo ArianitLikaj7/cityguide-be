@@ -72,4 +72,8 @@ public class FavoriteService {
         GastronomeDto gastronomeDto = gastronomeService.getById(request.gastronomeId());
         favorite.setGastronomeId(gastronomeDto.getId());
     }
+
+    public List<Long> findGastronomeIdByNameOfUser(String username) {
+        return favoriteRepository.findGastronomeIdByNameOfUser(username);
+    }
 }

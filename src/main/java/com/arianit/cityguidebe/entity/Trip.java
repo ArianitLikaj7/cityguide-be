@@ -25,4 +25,5 @@ public class Trip extends BaseEntity {
     @Column(name = "type_of_gastronome")
     @Enumerated(EnumType.STRING)
     private List<TypeOfGastronome> typesOfGastronome;
+
 }
