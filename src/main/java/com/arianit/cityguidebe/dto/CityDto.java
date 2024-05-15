@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonPropertyOrder({"day", "id", "nameOfCity", "culturalHeritage", "cityPrefix", "taxiPhoneNumber", "gastronomeDtos"})
+@JsonPropertyOrder({"id", "nameOfCity", "culturalHeritage", "cityPrefix", "taxiPhoneNumber", "gastronomeDtos"})
 public class CityDto extends BaseDto {
     private String nameOfCity;
     private String culturalHeritage;
