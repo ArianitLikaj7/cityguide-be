@@ -1,4 +1,4 @@
-CREATE TABLE public.favorites (
+CREATE TABLE favorites (
              id SERIAL PRIMARY KEY,
              name_of_user VARCHAR(255) NOT NULL,
              gastronome_id BIGINT NOT NULL,
