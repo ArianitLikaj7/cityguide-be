@@ -47,4 +47,9 @@ public class FavoriteController {
         favoriteService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/gastronomes/ids")
+    public List<Long> getGastronomeIdsByUser(@RequestParam String username) {
+        return favoriteService.findGastronomeIdByNameOfUser(username);
+    }
 }
