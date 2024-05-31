@@ -44,6 +44,18 @@ public class GastronomeService {
         return gastronomeMapper.toDto(gastronomeInDb);
     }
 
+    public List<GastronomeDto> createAll(List<GastronomeRequest> requests){
+        List<GastronomeDto> gastronomeDtos = new ArrayList<>();
+        for(GastronomeRequest r : requests){
+            try{
+            gastronomeDtos.add(create(r));
+        }catch (Exception e){
+                System.out.println("Failed to create Gastronome for request: " + e.getMessage());
+            }
+        }
+        return gastronomeDtos;
+    }
+
     public GastronomeDto getById(Long id){
         Gastronome gastronomeInDb = gastronomeRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException(
