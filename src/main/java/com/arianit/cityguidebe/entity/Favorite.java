@@ -18,11 +18,14 @@ public class Favorite extends BaseEntity {
     @Column(name = "gastronome_id")
     private Long gastronomeId;
 
+    @Column(name = "user_id")
+    private Long userId;
+
     @ManyToOne
     @JoinColumn(name = "gastronome_id", insertable = false, updatable = false)
     private Gastronome gastronome;
 
     @ManyToOne
-    @JoinColumn(name = "id",insertable = false, updatable = false)
+    @JoinColumn(name = "user_id",insertable = false, updatable = false)
     private User user;
 }

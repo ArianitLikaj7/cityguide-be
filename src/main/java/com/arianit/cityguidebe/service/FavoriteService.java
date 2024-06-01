@@ -1,12 +1,13 @@
 package com.arianit.cityguidebe.service;
 
 import com.arianit.cityguidebe.dao.FavoriteRepository;
+import com.arianit.cityguidebe.dto.CurrentLoggedInUserDto;
 import com.arianit.cityguidebe.dto.FavoriteDto;
 import com.arianit.cityguidebe.dto.GastronomeDto;
 import com.arianit.cityguidebe.dto.UserDto;
 import com.arianit.cityguidebe.dto.request.FavoriteRequest;
 import com.arianit.cityguidebe.entity.Favorite;
-import com.arianit.cityguidebe.entity.Gastronome;
+import com.arianit.cityguidebe.entity.User;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.FavoriteMapper;
 import com.arianit.cityguidebe.mapper.GastronomeMapper;
@@ -38,8 +39,9 @@ public class FavoriteService {
     public FavoriteDto create(FavoriteRequest request){
         Favorite favorite = mapper.toEntity(request);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        favorite.setNameOfUser(username);
+        User loggedUser = (User) authentication.getPrincipal();
+        favorite.setNameOfUser(loggedUser.getUsername());
+        favorite.setUserId(loggedUser.getId());
         mapGastronomeToFavorite(request,favorite);
         // TODO check if in databae then save
         return mapper.toDto(favoriteRepository.save(favorite));
