@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 public class GastronomeDto extends BaseDto {
     private Long cityId;
+    private Long userId;
     private String nameOfGastronome;
     private String schedule;
     private Double longitude;

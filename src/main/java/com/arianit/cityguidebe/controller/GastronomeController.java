@@ -82,6 +82,13 @@ public class GastronomeController {
         List<GastronomeDto> gastronomes = gastronomeService.getGastronomesByCityId(cityId);
         return new ResponseEntity<>(gastronomes, HttpStatus.OK);
     }
+
+    @GetMapping("/byUserId/{userId}")
+    public ResponseEntity<List<GastronomeDto>> getGastronomesByUserId(@PathVariable long userId) {
+        List<GastronomeDto> gastronomes = gastronomeService.getGastronomesByUserId(userId);
+        return new ResponseEntity<>(gastronomes, HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<GastronomeDto> update(
             @PathVariable Long id,

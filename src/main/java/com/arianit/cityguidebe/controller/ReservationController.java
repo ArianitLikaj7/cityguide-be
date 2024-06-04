@@ -41,6 +41,12 @@ public class ReservationController {
         return ResponseEntity.ok(reservationDtoList);
     }
 
+    @GetMapping("/byGastronomeId/{id}")
+    public ResponseEntity<List<ReservationDto>> getReservationsByGastronomeId(@PathVariable Long id) {
+        List<ReservationDto> reservationDtoList = reservationService.getByGastronomeId(id);
+        return ResponseEntity.ok(reservationDtoList);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<ReservationDto> update(
             @PathVariable Long id,

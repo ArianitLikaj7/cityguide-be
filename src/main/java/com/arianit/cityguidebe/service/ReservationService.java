@@ -61,6 +61,13 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
+    public List<ReservationDto> getByGastronomeId(Long id){
+        List<Reservation> reservations = reservationRepository.findByGastronomeId(id);
+        return reservations.stream()
+                .map(reservationMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     public ReservationDto update (Long id, UpdateReservationRequest request){
         if (!(id.equals(request.id()))){
             throw new MismatchedInputException("Ids dosent match");

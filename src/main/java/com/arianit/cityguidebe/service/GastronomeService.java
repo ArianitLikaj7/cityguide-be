@@ -4,12 +4,14 @@ import com.arianit.cityguidebe.dao.CityRepository;
 import com.arianit.cityguidebe.dao.GastronomeRepository;
 import com.arianit.cityguidebe.dto.CityDto;
 import com.arianit.cityguidebe.dto.GastronomeDto;
+import com.arianit.cityguidebe.dto.UserDto;
 import com.arianit.cityguidebe.dto.request.GastronomeRequest;
 import com.arianit.cityguidebe.dto.request.PageRequest;
 import com.arianit.cityguidebe.dto.request.UpdateGastronomeRequest;
 import com.arianit.cityguidebe.entity.City;
 import com.arianit.cityguidebe.entity.Gastronome;
 import com.arianit.cityguidebe.entity.TypeOfGastronome;
+import com.arianit.cityguidebe.entity.User;
 import com.arianit.cityguidebe.exception.MismatchedInputException;
 import com.arianit.cityguidebe.exception.ResourceNotFoundException;
 import com.arianit.cityguidebe.mapper.GastronomeMapper;
@@ -18,6 +20,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -33,6 +37,7 @@ public class GastronomeService {
     private final GastronomeMapper gastronomeMapper;
     private final CityService cityService;
 
+
     public GastronomeDto create (GastronomeRequest gastronomeRequest){
         City cityInDb = cityRepository.findById(gastronomeRequest.cityId())
                 .orElseThrow(()-> new ResourceNotFoundException(
@@ -40,6 +45,9 @@ public class GastronomeService {
                 ));
         Gastronome gastronome = gastronomeMapper.toEntity(gastronomeRequest);
         mapCityToGastronome(gastronomeRequest,gastronome);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser = (User) authentication.getPrincipal();
+        gastronome.setUserId(loggedUser.getId());
         Gastronome gastronomeInDb = gastronomeRepository.save(gastronome);
         return gastronomeMapper.toDto(gastronomeInDb);
     }
@@ -108,6 +116,13 @@ public class GastronomeService {
 
     public List<GastronomeDto> getGastronomesByCityId(Long cityId){
         List<Gastronome> gastronomes = gastronomeRepository.findByCityId(cityId);
+        return gastronomes.stream()
+                .map(gastronomeMapper::toDto)
+                .collect(toList());
+    }
+
+    public List<GastronomeDto> getGastronomesByUserId(Long cityId){
+        List<Gastronome> gastronomes = gastronomeRepository.findByUserId(cityId);
         return gastronomes.stream()
                 .map(gastronomeMapper::toDto)
                 .collect(toList());
