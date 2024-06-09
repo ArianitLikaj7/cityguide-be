@@ -71,6 +71,13 @@ public class FavoriteService {
         );
         favoriteRepository.deleteById(id);
     }
+
+    public void deleteFavoritesByGasronomeId(Long gastronomeId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser = (User) authentication.getPrincipal();
+        favoriteRepository.deleteByNameOfUserAndGastronomeId(loggedUser.getUsername(), gastronomeId);
+    }
+
     private void mapGastronomeToFavorite(FavoriteRequest request, Favorite favorite){
         GastronomeDto gastronomeDto = gastronomeService.getById(request.gastronomeId());
         favorite.setGastronomeId(gastronomeDto.getId());

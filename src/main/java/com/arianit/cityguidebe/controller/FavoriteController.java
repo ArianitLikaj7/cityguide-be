@@ -48,6 +48,12 @@ public class FavoriteController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/byGastronomeId{id}")
+    public ResponseEntity<Void> deleteByGastronomeId(@PathVariable Long id) {
+        favoriteService.deleteFavoritesByGasronomeId(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/gastronomes/ids")
     public List<Long> getGastronomeIdsByUser(@RequestParam String username) {
         return favoriteService.findGastronomeIdByNameOfUser(username);
