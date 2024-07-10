@@ -22,4 +22,9 @@ public class GastronomeDto extends BaseDto {
     private String description;
     private Double price;
     private String phoneNumber;
+
+    public GastronomeDto(Long cityId, Long userId){
+        this.cityId = cityId;
+        this.userId = userId;
+    }
 }

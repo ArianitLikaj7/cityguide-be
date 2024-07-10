@@ -19,4 +19,7 @@ public class CityDto extends BaseDto {
     @JsonManagedReference
     private List<GastronomeDto> gastronomeDtos;
     private int day;
+    public CityDto(String nameOfCity){
+        this.nameOfCity = nameOfCity;
+    }
 }
